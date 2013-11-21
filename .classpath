@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src/main/xtend-gen"/>
+	<classpathentry kind="src" path="src/main/java"/>
+	<classpathentry kind="src" path="src/test/java"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="libs/activejdbc-1.4.1.jar"/>
+	<classpathentry kind="lib" path="libs/freemarker-2.3.14.jar"/>
+	<classpathentry kind="lib" path="libs/hamcrest-core-1.1.jar"/>
+	<classpathentry kind="lib" path="libs/javalite-common-1.4.1.jar"/>
+	<classpathentry kind="lib" path="libs/javax.servlet-3.0.0.v201112011016.jar"/>
+	<classpathentry kind="lib" path="libs/jetty-http-9.0.2.v20130417.jar"/>
+	<classpathentry kind="lib" path="libs/jetty-io-9.0.2.v20130417.jar"/>
+	<classpathentry kind="lib" path="libs/jetty-security-9.0.2.v20130417.jar"/>
+	<classpathentry kind="lib" path="libs/jetty-server-9.0.2.v20130417.jar"/>
+	<classpathentry kind="lib" path="libs/jetty-servlet-9.0.2.v20130417.jar"/>
+	<classpathentry kind="lib" path="libs/jetty-util-9.0.2.v20130417.jar"/>
+	<classpathentry kind="lib" path="libs/jetty-webapp-9.0.2.v20130417.jar"/>
+	<classpathentry kind="lib" path="libs/jetty-xml-9.0.2.v20130417.jar"/>
+	<classpathentry kind="lib" path="libs/junit-4.10.jar"/>
+	<classpathentry kind="lib" path="libs/mysql-connector-java-5.0.4.jar"/>
+	<classpathentry kind="lib" path="libs/slf4j-api-1.7.2.jar"/>
+	<classpathentry kind="lib" path="libs/slf4j-simple-1.6.4.jar"/>
+	<classpathentry kind="lib" path="libs/spark-core-1.1.1.jar"/>
+	<classpathentry kind="lib" path="libs/sqlite-jdbc-3.7.2.jar"/>
+	<classpathentry kind="con" path="org.eclipse.xtend.XTEND_CONTAINER"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
