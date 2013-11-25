@@ -1,9 +1,9 @@
 package com.tobykurien.sparkler
 
 import com.github.mustachejava.DefaultMustacheFactory
-import com.github.mustachejava.MustacheException
 import java.io.StringWriter
 import java.util.Map
+import java.util.concurrent.Executors
 import spark.Request
 import spark.Response
 import spark.Spark
@@ -17,6 +17,7 @@ class Sparkler {
       try {
          var writer = new StringWriter()
          var mf = new DefaultMustacheFactory()
+         mf.setExecutorService(Executors.newCachedThreadPool())
          var mustache = mf.compile(template)
          mustache.execute(writer, scopes)
          writer.toString
