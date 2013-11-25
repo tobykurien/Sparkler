@@ -2,7 +2,7 @@ package com.tobykurien.sparkler_example
 
 import static extension com.tobykurien.sparkler.Sparkler.*
 
-class Main {
+class Example1 {
    def static void main(String[] args) {
       // Simplest example
       get("/") [req, res|
@@ -11,7 +11,7 @@ class Main {
       
       // Named parameters
       get("/hello/:name") [req, res|
-         "Well hello, " + req.params("name")
+         "Well hello there, " + req.params("name")
       ]
       
       // Rendering a Mustache template
@@ -21,6 +21,9 @@ class Main {
             "items" -> #[
                #{ "name" -> "Alice" },
                #{ "name" -> "Bob" }
+            ],
+            "uppercase" -> [String s|
+               s.toUpperCase
             ] 
          })
       ]
