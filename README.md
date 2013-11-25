@@ -14,6 +14,14 @@ Sparkler is based on:
 * [Mustache.java] for templating (with Django-style template inheritance)
 * [ActiveJDBC] ORM library
 
+Features
+------------
+
+* Quick startup: simply Run/Debug as Java Application and it runs using an embedded Jetty server
+* Quick turn-around: in Debug mode, hot code replacement is supported. Simply edit your code and reload the web page.
+* Ruby-like code syntax thanks to Xtend
+* Full IDE support in Eclipse (code-completion, refactoring, code formatting, etc.)
+
 Example
 --------
 
