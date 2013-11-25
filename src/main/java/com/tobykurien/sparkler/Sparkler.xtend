@@ -1,5 +1,8 @@
 package com.tobykurien.sparkler
 
+import com.github.mustachejava.DefaultMustacheFactory
+import java.io.StringWriter
+import java.util.Map
 import spark.Filter
 import spark.Request
 import spark.Response
@@ -7,6 +10,18 @@ import spark.Route
 import spark.Spark
 
 class Sparkler {
+   /**
+    * Render a Mustache.java template
+    */
+   def static render(Response res, String template, Map<String, ? extends Object> scopes) {
+    var writer = new StringWriter()
+    var mf = new DefaultMustacheFactory()
+    var mustache = mf.compile(template)
+    mustache.execute(writer, scopes)
+    writer.toString
+   }
+
+   // Extension methods for Spark's static methods, for easier syntax
    def static get(String path, (Request, Response)=>Object handler) {
       Spark.get(new SRoute(path, handler))
    }
@@ -50,7 +65,7 @@ class Sparkler {
    def static after(String path, (Request, Response)=>Object handler) {
       Spark.after(new SFilter(path, handler))
    }
-   
+
    def static setIpAddress(String ipAddress) {
       Spark.setIpAddress(ipAddress)
    }
@@ -59,57 +74,15 @@ class Sparkler {
       Spark.setPort(port)
    }
 
-   def static setSecure(String keystoreFile, String keystorePassword, 
-      String truststoreFile, String truststorePassword) {
+   def static setSecure(String keystoreFile, String keystorePassword, String truststoreFile, String truststorePassword) {
       Spark.setSecure(keystoreFile, keystorePassword, truststoreFile, truststorePassword)
    }
 
    def static externalStaticFileLocation(String path) {
       Spark.externalStaticFileLocation(path)
    }
-   
+
    def static staticFileLocation(String path) {
       Spark.staticFileLocation(path)
-   }
-}
-
-class SFilter extends Filter {
-   var (Request, Response)=>Object handler
-
-   protected new((Request, Response)=>Object handler) {
-      super()      
-      this.handler = handler
-   }
-   
-   protected new(String path, (Request, Response)=>Object handler) {
-      super(path)
-      this.handler = handler
-   }
-   
-   protected new(String path, String acceptType, (Request, Response)=>Object handler) {
-      super(path, acceptType)
-      this.handler = handler
-   }
-   
-   override handle(Request req, Response res) {
-      handler.apply(req, res)
-   }
-}
-
-class SRoute extends Route {
-   var (Request, Response)=>Object handler
-
-   protected new(String path, (Request, Response)=>Object handler) {
-      super(path)
-      this.handler = handler
-   }
-
-   protected new(String path, String acceptType, (Request, Response)=>Object handler) {
-      super(path, acceptType)
-      this.handler = handler
-   }
-
-   override handle(Request req, Response res) {
-      handler.apply(req, res)
    }
 }

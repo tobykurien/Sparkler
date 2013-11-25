@@ -9,9 +9,9 @@
 	<url>http://maven.apache.org</url>
 	<dependencies>
 		<dependency>
-		      <groupId>com.sparkjava</groupId>
-		      <artifactId>spark-core</artifactId>
-		      <version>1.1.1</version>
+			<groupId>com.sparkjava</groupId>
+			<artifactId>spark-core</artifactId>
+			<version>1.1.1</version>
 		</dependency>
 
 		<dependency>
@@ -37,6 +37,12 @@
 			<groupId>org.xerial</groupId>
 			<artifactId>sqlite-jdbc</artifactId>
 			<version>3.7.2</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.github.spullara.mustache.java</groupId>
+			<artifactId>compiler</artifactId>
+			<version>0.8.13</version>
 		</dependency>
 	</dependencies>
 

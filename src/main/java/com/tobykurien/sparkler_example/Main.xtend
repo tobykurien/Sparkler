@@ -11,5 +11,11 @@ class Main {
       get("/hello/:name") [req, res|
          "Well hello, " + req.params("name")
       ]
+      
+      get("/example1/:message") [req, res|
+         res.render("templates/example1.html", #{ 
+            "message" -> req.params("message") 
+         })
+      ]
    }
 }
