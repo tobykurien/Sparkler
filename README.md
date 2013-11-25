@@ -3,7 +3,7 @@ Sparkler web framework
 
 As evident from the [TechEmpower Benchmarks], Java is significantly faster than other, more developer-friendly web frameworks like Django, Rails, or node.js. 
 
-Sparkler is an attempt to bring developer-friendliness to Java web development by using Rails/Sinatra-style Java libraries/frameworks together with [Xtend] to provide the syntactic sugar and other nice language features. The result should be the best of both worlds: incredible performance with a developer-friendly framework to make Java web development fun.
+Sparkler is an attempt to bring developer-friendliness to Java web development by using Rails/Sinatra-style Java libraries/frameworks together with Xtend to provide syntactic sugar and other fun language features (like extension methods and lambdas). The result should be the best of both worlds: incredible performance with a developer-friendly framework to make Java web development fun.
 
 Tech
 -----------
@@ -20,16 +20,16 @@ Example
 Here's a basic (but complete) example of using Sparkler:
 
 ```xtend
-package com.tobykurien.sparkler_example
-
 import static extension com.tobykurien.sparkler.Sparkler.*
 
 class Main {
    def static void main(String[] args) {
+      // Simplest example
       get("/") [req, res|
          "Hi there!"
       ]
       
+      // Using named parameters
       get("/hello/:name") [req, res|
          "Well hello, " + req.params("name")
       ]
@@ -39,16 +39,16 @@ class Main {
 
 An example of using the templating system:
 ```xtend
-      // Rendering a Mustache template
-      get("/example1/:message") [req, res|
-         render("templates/example1.html", #{ 
-            "message" -> req.params("message"),
-            "items" -> #[
-               #{ "name" -> "Alice" },
-               #{ "name" -> "Bob" }
-            ] 
-         })
-      ]
+   // Rendering a Mustache template
+   get("/example1/:message") [req, res|
+      render("templates/example1.html", #{ 
+         "message" -> req.params("message"),
+         "items" -> #[
+            #{ "name" -> "Alice" },
+            #{ "name" -> "Bob" }
+         ] 
+      })
+   ]
 ```
 
 And in templates/example1.html:
@@ -56,7 +56,6 @@ And in templates/example1.html:
 <html>
 <head><title>Example 1</title></head>
 <body>
-{{$content}}
    The message is: {{message}}
    <p/>
    Some additional stuff:
@@ -65,7 +64,6 @@ And in templates/example1.html:
         <li> Name: {{name}}
       {{/items}}
    </ol>
-{{/content}}
 </body>
 ```
 
