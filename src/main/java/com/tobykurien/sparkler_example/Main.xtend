@@ -21,9 +21,6 @@ class Main {
             "items" -> #[
                #{ "name" -> "Alice" },
                #{ "name" -> "Bob" }
-            ],
-            "uppercase" -> [String s|
-               s.toUpperCase
             ] 
          })
       ]
