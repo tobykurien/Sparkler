@@ -7,19 +7,27 @@ This means that you disadvantage yourself by creating web startups using these t
 as scaling becomes a problem quite quickly, and scaling is not an easy problem to solve.
 
 Sparkler is an attempt to bring developer-friendliness to Java web development by 
-using Rails/Sinatra-style Java libraries/frameworks together with Xtend to provide 
+using Rails/Sinatra-style Java libraries/frameworks together with [Xtend] to provide 
 syntactic sugar and other fun language features (like extension methods and lambdas). 
 The result should be the best of both worlds: incredible performance with a 
-developer-friendly framework to make Java web development fun.
+developer-friendly framework. The idea is that Sparkler will be fun enough for use in 
+hackathons, as a web startup prototyping tool, and a quick way to get RESTful JSON 
+backends up.
 
 Tech
 -----------
 
-Sparkler is (currently) based on:
+Sparkler uses best-of-breed technologies and is (currently) based on:
 
+* [Xtend] is a flexible and expressive dialect of Java, which compiles into readable Java 5 compatible source code. Think: CoffeeScript for Java
 * [Spark] web framework
-* [Mustache.java] for templating (with Django-style template inheritance)
-* [ActiveJDBC] ORM library
+* [Jetty] high-performance embedded server (supports servlets, SPDY, WebSockets)
+* [Mustache.java] for logic-less templating (with Django-style template inheritance)
+
+Planned integrations:
+* [ActiveJDBC] ActiveRecord-style ORM library
+* [Jackson] high-performance JSON processor
+* [Carbon 5] database migrations
 
 Features
 ------------
@@ -28,6 +36,7 @@ Features
 * Quick turn-around: in Debug mode, hot code replacement is supported. Simply edit your code and reload the web page.
 * Ruby-like code syntax thanks to Xtend
 * Full IDE support in Eclipse (code-completion, refactoring, code formatting, etc.)
+* High-performance: based on high-performance components like Spark, Jetty and Jackson.
 
 Examples
 ------------
@@ -117,7 +126,7 @@ You can now use that as a layout in templates/example1.html as follows:
 {{$title}}Example 1{{/title}}
 
 {{$content}}
-  The overriden content
+  The overridden content
 {{/content}}
 
 {{/base}}
@@ -153,7 +162,7 @@ Limitations
 Sparkler is currently work-in-progress. Here are some notable limitations:
 
 * Maven build doesn't currently work. You need to use Eclipse with Xtend compiler installed.
-* ActiveJDBC is not yet integrated - this is currently being worked on. 
+* No REPL. This could be added later using JRuby, Bean Shell Scripting, or similar.
 
 License
 ----------
@@ -166,3 +175,5 @@ MIT
   [Spark]: http://sparkjava.com
   [Mustache.java]: https://github.com/spullara/mustache.java
   [activejdbc]: https://code.google.com/p/activejdbc/
+  [Jackson]: https://github.com/FasterXML/jackson
+  [Carbon 5]: https://code.google.com/p/c5-db-migration/
