@@ -1,24 +1,28 @@
 package com.tobykurien.sparkler
 
 import com.github.mustachejava.DefaultMustacheFactory
+import com.github.mustachejava.MustacheException
 import java.io.StringWriter
 import java.util.Map
-import spark.Filter
 import spark.Request
 import spark.Response
-import spark.Route
 import spark.Spark
 
 class Sparkler {
+
    /**
     * Render a Mustache.java template
     */
-   def static render(Response res, String template, Map<String, ? extends Object> scopes) {
-    var writer = new StringWriter()
-    var mf = new DefaultMustacheFactory()
-    var mustache = mf.compile(template)
-    mustache.execute(writer, scopes)
-    writer.toString
+   def static render(String template, Map<String, ? extends Object> scopes) {
+      try {
+         var writer = new StringWriter()
+         var mf = new DefaultMustacheFactory()
+         var mustache = mf.compile(template)
+         mustache.execute(writer, scopes)
+         writer.toString
+      } catch (Exception e) {
+         e.toString + "<br/>" + e.message + "<br/>" + e.stackTrace.toString
+      }
    }
 
    // Extension methods for Spark's static methods, for easier syntax

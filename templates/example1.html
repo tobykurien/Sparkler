@@ -1,6 +1,17 @@
-<html>
-<head></head>
-<body>
+{{< base}}
+
+{{$title}}Example 1{{/title}}
+
+{{$content}}
    The message is: {{message}}
-</body>
-</html>
+   <p/>
+   Some additional stuff:
+   <ol>
+      {{#items}}
+        <li> Name: {{#uppercase}}{{name}}{{/uppercase}}
+      {{/items}}
+   </ol>
+   {{> test_partial}}
+{{/content}}
+
+{{/base}}
