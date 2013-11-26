@@ -4,6 +4,10 @@ import static extension com.tobykurien.sparkler.Sparkler.*
 
 class Example1 {
    def static void main(String[] args) {
+      // these are optional initializers, must be set before routes
+      setPort(4567) // port to bind on startup, default is 4567
+      staticFileLocation("/public") // where static files like images and javascript are served from
+      
       // Simplest example
       get("/") [req, res|
          "Hi there!"
@@ -16,7 +20,7 @@ class Example1 {
       
       // Rendering a Mustache template
       get("/example1/:message") [req, res|
-         render("templates/example1.html", #{ 
+         render("views/example1.html", #{ 
             "message" -> req.params("message"),
             "items" -> #[
                #{ "name" -> "Alice" },
