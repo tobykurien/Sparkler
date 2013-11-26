@@ -19,7 +19,7 @@ Tech
 
 Sparkler uses best-of-breed technologies and is (currently) based on:
 
-* [Xtend] is a flexible and expressive dialect of Java, which compiles into readable Java 5 compatible source code. Think: CoffeeScript for Java
+* [Xtend] - is a flexible and expressive dialect of Java, which compiles into readable Java 5 compatible source code. Think: CoffeeScript for Java
 * [Spark] web framework
 * [Jetty] high-performance embedded server (supports servlets, SPDY, WebSockets)
 * [Mustache.java] for logic-less templating (with Django-style template inheritance)
@@ -173,6 +173,7 @@ MIT
   [TechEmpower Benchmarks]: http://www.techempower.com/benchmarks/
   [Xtend]: http://xtend-lang.org
   [Spark]: http://sparkjava.com
+  [Jetty]: http://www.eclipse.org/jetty/
   [Mustache.java]: https://github.com/spullara/mustache.java
   [activejdbc]: https://code.google.com/p/activejdbc/
   [Jackson]: https://github.com/FasterXML/jackson
