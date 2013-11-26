@@ -21,7 +21,7 @@ class JsonModelTransformer extends ResponseTransformerRoute {
    }
    
    override render(Object model) {
-      Base.open(DatabaseManager.newDataSource("jdbc:h2:db/example2", "sa", ""))
+      Base.open(DatabaseManager.newDataSource)
       try {
          if (model instanceof Model) {
             return (model as Model).toJson(false)
@@ -39,7 +39,7 @@ class JsonModelTransformer extends ResponseTransformerRoute {
    
    override handle(Request request, Response response) {
       try {
-         Base.open(DatabaseManager.newDataSource("jdbc:h2:db/example2", "sa", ""))
+         Base.open(DatabaseManager.newDataSource)
          handler.apply(request, response)
       } catch (Exception e) {
          Helper.handleError(request, response, e)

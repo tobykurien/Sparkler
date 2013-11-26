@@ -12,8 +12,8 @@ import static com.tobykurien.sparkler.Sparkler.*
  */
 class Example2 {
    def static void main(String[] args) {
-      DatabaseManager.init
-      val book = Book.with(typeof(Book))
+      DatabaseManager.init(Example2.package.toString)
+      val book = Model.with(typeof(Book))
       
       // Gets all available book resources (id's)
       get(new JsonModelTransformer("/books") [req, res|
