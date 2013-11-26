@@ -4,6 +4,9 @@ import com.tobykurien.sparkler.db.Model
 
 import static com.tobykurien.sparkler.Sparkler.*
 import com.tobykurien.sparkler.transformer.JsonModelTransformer
+import org.javalite.activejdbc.LogFilter
+import org.javalite.activejdbc.Base
+import com.tobykurien.sparkler.db.DatabaseManager
 
 /**
  * A simple RESTful example showing howto create, get, update and delete book resources.
@@ -11,6 +14,9 @@ import com.tobykurien.sparkler.transformer.JsonModelTransformer
  */
 class Example2 {
    def static void main(String[] args) {
+      Class.forName("org.sqlite.JDBC") // load sqlite driver
+      Base.open(DatabaseManager.newDataSource("jdbc:sqlite:db/example2.db", "", ""))
+      
       // Gets all available book resources (id's)
       get(new JsonModelTransformer("/books") [req, res|
          // JsonModelTransform can take a Model (or LazyList of Models) and generate JSON

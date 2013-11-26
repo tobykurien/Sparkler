@@ -5,6 +5,7 @@ import org.javalite.activejdbc.LazyList
 import spark.Request
 import spark.Response
 import spark.ResponseTransformerRoute
+import com.tobykurien.sparkler.Helper
 
 /**
  * Returns a JSON serialized version of Model objects
@@ -23,11 +24,15 @@ class JsonModelTransformer extends ResponseTransformerRoute {
       } else if (model instanceof LazyList) {
          return (model as LazyList).toJson(false)
       } else {
-         throw new UnsupportedOperationException("Not implemented for generic objects yet")
+         model.toString
       }
    } 
    
    override handle(Request request, Response response) {
-      handler.apply(request, response)
+      try {
+         handler.apply(request, response)
+      } catch (Exception e) {
+         Helper.handleError(request, response, e)
+      }
    }
 }

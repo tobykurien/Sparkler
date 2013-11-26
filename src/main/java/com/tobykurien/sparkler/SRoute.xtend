@@ -21,6 +21,10 @@ class SRoute extends Route {
    }
 
    override handle(Request req, Response res) {
-      handler.apply(req, res)
+      try {
+         handler.apply(req, res)
+      } catch (Exception e) {
+         Helper.handleError(req, res, e)
+      }
    }
 }

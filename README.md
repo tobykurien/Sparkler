@@ -98,8 +98,8 @@ which looks like:
 
  Some additional stuff:
 
-    Name: Alice
-    Name: Bob 
+    1. Name: Alice
+    2. Name: Bob 
 ```
 
 Partials and template inheritance are also supported by Mustache.java. You can 

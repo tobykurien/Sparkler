@@ -26,8 +26,11 @@ class SFilter extends Filter {
    }
 
    override handle(Request req, Response res) {
-      handler.apply(req, res, this)
-      
+      try {
+         handler.apply(req, res, this)
+      } catch (Exception e) {
+         Helper.handleError(req, res, e)
+      }
    }
    
    def haltFilter() {
