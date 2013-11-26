@@ -1,11 +1,13 @@
 package com.tobykurien.sparkler.transformer
 
+import com.tobykurien.sparkler.Helper
+import com.tobykurien.sparkler.db.DatabaseManager
 import com.tobykurien.sparkler.db.Model
+import org.javalite.activejdbc.Base
 import org.javalite.activejdbc.LazyList
 import spark.Request
 import spark.Response
 import spark.ResponseTransformerRoute
-import com.tobykurien.sparkler.Helper
 
 /**
  * Returns a JSON serialized version of Model objects
@@ -19,20 +21,30 @@ class JsonModelTransformer extends ResponseTransformerRoute {
    }
    
    override render(Object model) {
-      if (model instanceof Model) {
-         return (model as Model).toJson(false)
-      } else if (model instanceof LazyList) {
-         return (model as LazyList).toJson(false)
-      } else {
-         model.toString
+      Base.open(DatabaseManager.newDataSource("jdbc:h2:db/example2", "sa", ""))
+      try {
+         if (model instanceof Model) {
+            return (model as Model).toJson(false)
+         } else if (model instanceof LazyList) {
+            return (model as LazyList).toJson(false)
+         } else if (model == null) {
+            ""
+         } else {
+            model.toString
+         }         
+      } finally {
+         Base.close()
       }
    } 
    
    override handle(Request request, Response response) {
       try {
+         Base.open(DatabaseManager.newDataSource("jdbc:h2:db/example2", "sa", ""))
          handler.apply(request, response)
       } catch (Exception e) {
          Helper.handleError(request, response, e)
+      } finally {
+         Base.close()
       }
    }
 }

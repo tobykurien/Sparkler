@@ -7,6 +7,10 @@ import org.apache.commons.dbcp.PoolingDataSource
 import org.apache.commons.pool.impl.GenericObjectPool
 
 class DatabaseManager {
+   
+   def static init() {
+      Class.forName("org.h2.Driver") // load database driver
+   }
 
    /**
       * Constructs a new SQL data source with the given parameters. Connections
