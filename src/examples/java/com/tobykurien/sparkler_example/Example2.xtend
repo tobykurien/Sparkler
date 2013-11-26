@@ -3,6 +3,7 @@ package com.tobykurien.sparkler_example
 import com.tobykurien.sparkler.db.Model
 
 import static com.tobykurien.sparkler.Sparkler.*
+import com.tobykurien.sparkler.transformer.JsonModelTransformer
 
 /**
  * A simple RESTful example showing howto create, get, update and delete book resources.
@@ -11,30 +12,37 @@ import static com.tobykurien.sparkler.Sparkler.*
 class Example2 {
    def static void main(String[] args) {
       // Gets all available book resources (id's)
-      get("/books") [req, res|
-         
-      ]
+      get(new JsonModelTransformer("/books") [req, res|
+         // JsonModelTransform can take a Model (or LazyList of Models) and generate JSON
+         Book.findAll
+      ])
        
       // Gets the book resource for the provided id
-      get("/books/:id") [req, res|
-         
-      ]
+      get(new JsonModelTransformer("/books/:id") [req, res|
+         Book.findById(req.params("id")) as Book
+      ])
       
       // Creates a new book resource, will return the ID to the created resource
       // author and title are sent as query parameters e.g. /books?author=Foo&title=Bar
-      post("/books") [req, res|
-         
-      ]
+      post(new JsonModelTransformer("/books") [req, res|
+         Book.createIt(#{
+            "title" -> req.queryParams("title"),
+            "author" -> req.queryParams("author")
+         }) as Book         
+      ])
       
       // Updates the book resource for the provided id with new information
       // author and title are sent as query parameters e.g. /books/<id>?author=Foo&title=Bar
-      put("/books/:id") [req, res|
-         
-      ]
+      put(new JsonModelTransformer("/books/:id") [req, res|
+         Book.findById(req.params("id"))?.set(
+            "title, author",
+            #[req.params("title"), req.params("author")]
+         ).saveIt        
+      ])
       
       // Deletes the book resource for the provided id 
       delete("/books/:id") [req, res|
-         
+         Book.findById(req.params("id")).delete
       ]
    }
 }
@@ -42,6 +50,6 @@ class Example2 {
 /**
  * Books table in the database
  */
-class Books extends Model {
-   // data model is inferred from the database, see the migration for details  
+class Book extends Model {
+   // data model is inferred from the database 
 }

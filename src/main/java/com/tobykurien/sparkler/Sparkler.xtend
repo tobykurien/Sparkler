@@ -6,6 +6,7 @@ import java.util.Map
 import java.util.concurrent.Executors
 import spark.Request
 import spark.Response
+import spark.ResponseTransformerRoute
 import spark.Spark
 
 class Sparkler {
@@ -31,36 +32,72 @@ class Sparkler {
       Spark.get(new SRoute(path, handler))
    }
 
+   def static get(ResponseTransformerRoute route) {
+      Spark.get(route)
+   }
+
    def static post(String path, (Request, Response)=>Object handler) {
       Spark.post(new SRoute(path, handler))
+   }
+
+   def static post(ResponseTransformerRoute route) {
+      Spark.post(route)
    }
 
    def static options(String path, (Request, Response)=>Object handler) {
       Spark.options(new SRoute(path, handler))
    }
 
+   def static options(ResponseTransformerRoute route) {
+      Spark.options(route)
+   }
+
    def static head(String path, (Request, Response)=>Object handler) {
       Spark.head(new SRoute(path, handler))
+   }
+
+   def static head(ResponseTransformerRoute route) {
+      Spark.head(route)
    }
 
    def static patch(String path, (Request, Response)=>Object handler) {
       Spark.patch(new SRoute(path, handler))
    }
 
+   def static patch(ResponseTransformerRoute route) {
+      Spark.patch(route)
+   }
+
    def static put(String path, (Request, Response)=>Object handler) {
       Spark.put(new SRoute(path, handler))
+   }
+
+   def static put(ResponseTransformerRoute route) {
+      Spark.put(route)
    }
 
    def static connect(String path, (Request, Response)=>Object handler) {
       Spark.connect(new SRoute(path, handler))
    }
 
+   def static connect(ResponseTransformerRoute route) {
+      Spark.connect(route)
+   }
+
    def static delete(String path, (Request, Response)=>Object handler) {
       Spark.delete(new SRoute(path, handler))
    }
 
+   def static delete(ResponseTransformerRoute route) {
+      Spark.delete(route)
+   }
+
    def static trace(String path, (Request, Response)=>Object handler) {
       Spark.trace(new SRoute(path, handler))
+   }
+
+   def static trace(ResponseTransformerRoute route) {
+      Spark.trace(route)
    }
 
    def static before((Request, Response, SFilter)=>void handler) {
