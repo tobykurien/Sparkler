@@ -63,12 +63,28 @@ class Sparkler {
       Spark.trace(new SRoute(path, handler))
    }
 
-   def static before(String path, (Request, Response)=>Object handler) {
+   def static before((Request, Response, SFilter)=>void handler) {
+      Spark.before(new SFilter(handler))
+   }
+
+   def static before(String path, (Request, Response, SFilter)=>void handler) {
       Spark.before(new SFilter(path, handler))
    }
 
-   def static after(String path, (Request, Response)=>Object handler) {
+   def static before(String path, String acceptType, (Request, Response, SFilter)=>void handler) {
+      Spark.before(new SFilter(path, acceptType, handler))
+   }
+
+   def static after((Request, Response, SFilter)=>void handler) {
+      Spark.after(new SFilter(handler))
+   }
+
+   def static after(String path, (Request, Response, SFilter)=>void handler) {
       Spark.after(new SFilter(path, handler))
+   }
+
+   def static after(String path, String acceptType, (Request, Response, SFilter)=>void handler) {
+      Spark.after(new SFilter(path, acceptType, handler))
    }
 
    def static setIpAddress(String ipAddress) {
