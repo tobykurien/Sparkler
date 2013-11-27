@@ -52,17 +52,35 @@ class DatabaseManager {
       * @return a new SQL data source
       */
    private def static DataSource newDataSource(String uri, String user, String password) {
-      var connectionPool = new GenericObjectPool(null);
-      connectionPool.setMaxActive(256);
-      connectionPool.setMaxIdle(256);
-      var connectionFactory = new DriverManagerConnectionFactory(uri, user, password);
+      var connectionPool = new GenericObjectPool(null)
+      connectionPool.setMaxActive(maxActive)
+      connectionPool.setMaxIdle(maxIdle)
+      var connectionFactory = new DriverManagerConnectionFactory(uri, user, password)
 
       //
       // This constructor modifies the connection pool, setting its connection
       // factory to this. (So despite how it may appear, all of the objects
       // declared in this method are incorporated into the returned result.)
       //
-      new PoolableConnectionFactory(connectionFactory, connectionPool, null, null, false, true);
-      return new PoolingDataSource(connectionPool);
+      new PoolableConnectionFactory(connectionFactory, connectionPool, null, null, false, true)
+      return new PoolingDataSource(connectionPool)
+   }
+   
+   private def static int getMaxActive() {
+      try { 
+         var ret = dbConfig.get("max_active")
+         Integer.parseInt(ret)
+      } catch (Exception e) {
+         256
+      }
+   }
+
+   private def static int getMaxIdle() {
+      try { 
+         var ret = dbConfig.get("max_idle")
+         Integer.parseInt(ret)
+      } catch (Exception e) {
+         256
+      }
    }
 }
