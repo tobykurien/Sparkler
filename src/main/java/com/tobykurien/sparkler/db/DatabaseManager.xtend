@@ -16,10 +16,13 @@ class DatabaseManager {
    
    /**
     * Initialize the database system
+    * 
+    * @param modelsPackageName - the root package where your database model classes
+    * are stored. Sub-packages will also be searched for database models.
     */
-   def static init(String rootPackageName) {
-      rootPackage = rootPackageName
-
+   def static init(String modelsPackageName) {
+      rootPackage = modelsPackageName
+//TODO: pass rootPackage to activeJDBC
       // load the database config
       var yaml = new Yaml()
       var config = yaml.load(new FileInputStream("config/database.yml")) as Map<String,Map<String,String>> 

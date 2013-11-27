@@ -20,12 +20,13 @@ Tech
 Sparkler uses best-of-breed technologies and is (currently) based on:
 
 * [Xtend] - is a flexible and expressive dialect of Java, which compiles into readable Java 5 compatible source code. Think: CoffeeScript for Java
-* [Spark] web framework
+* [Spark] high-performance Sinatra-inspired web framework
 * [Jetty] high-performance embedded server (supports servlets, SPDY, WebSockets)
 * [Mustache.java] for logic-less templating (with Django-style template inheritance)
+* [ActiveJDBC] ActiveRecord-style ORM library (using a modified fork)
+* [Apache DBCP] database connection pooling
 
 Planned integrations:
-* [ActiveJDBC] ActiveRecord-style ORM library
 * [Jackson] high-performance JSON processor
 * [Carbon 5] database migrations
 
@@ -178,3 +179,4 @@ MIT
   [activejdbc]: https://code.google.com/p/activejdbc/
   [Jackson]: https://github.com/FasterXML/jackson
   [Carbon 5]: https://code.google.com/p/c5-db-migration/
+  [Apache DBCP]: https://commons.apache.org/proper/commons-dbcp/

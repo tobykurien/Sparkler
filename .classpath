@@ -7,7 +7,6 @@
 	<classpathentry kind="src" path="src/test/java"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="libs/hamcrest-core-1.1.jar"/>
-	<classpathentry kind="lib" path="libs/javalite-common-1.4.1.jar"/>
 	<classpathentry kind="lib" path="libs/javax.servlet-3.0.0.v201112011016.jar"/>
 	<classpathentry kind="lib" path="libs/jetty-http-9.0.2.v20130417.jar"/>
 	<classpathentry kind="lib" path="libs/jetty-io-9.0.2.v20130417.jar"/>
@@ -30,5 +29,7 @@
 	<classpathentry kind="lib" path="libs/commons-dbcp-1.4.jar"/>
 	<classpathentry kind="lib" path="libs/snakeyaml-1.11.jar"/>
 	<classpathentry kind="lib" path="libs/h2-1.3.174.jar"/>
+	<classpathentry kind="lib" path="libs/javalite-common-1.4.9-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="libs/activejdbc-1.4.9-tobykurien-1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
