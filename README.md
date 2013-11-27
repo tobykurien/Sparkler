@@ -154,7 +154,7 @@ are overriden by the sub-template.
 You can add `before` and `after` filters to your routes for things like authentication. An example filter:
 ```xtend
    before("/admin") [ req, res, filter |
-      var password = req.queryParams("user")
+      var password = req.queryParams("password")
       if (!password.equals("openSesame")) {
          filter.haltFilter(401, "You are not welcome here!!!")
       }
@@ -220,11 +220,13 @@ References
 ------------
 
 Refer to the following links for documentation on the various technologies used in 
-Sparkler:
+Sparkler that you can access:
 
+* Xtend language: http://www.eclipse.org/xtend/documentation.html
 * Spark Java framework: http://sparkjava.com/readme.html
 * Mustache.js templating: http://mustache.github.io/mustache.5.html
-* Xtend language: http://www.eclipse.org/xtend/documentation.html
+* ActiveJDBC ORM: http://javalt.org/p/activejdbc
+* SnakeYAML for parsing YAML files: http://code.google.com/p/snakeyaml/wiki/Documentation
 
 Limitations
 -------------
@@ -232,7 +234,9 @@ Limitations
 Sparkler is currently work-in-progress. Here are some notable limitations:
 
 * Maven build doesn't currently work. You need to use Eclipse with Xtend compiler installed.
-* No REPL. This could be added later using JRuby, Bean Shell Scripting, or similar.
+* Test environment not supported yet (doesn't delete and re-create the database).
+* Migrations not yet supported.
+* No REPL.
 
 License
 ----------
