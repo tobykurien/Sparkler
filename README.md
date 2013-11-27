@@ -213,7 +213,7 @@ To use Sparkler in it's current state:
 * Install Eclipse with the Xtend compiler (http://www.eclipse.org/xtend/download.html)
 * Clone this repository and import into Eclipse as a Java project
 * You should now be able to run the examples from the src/examples source tree, and 
-  create your own project using Sparkler. As an example, right-click on Example1.java
+  create your own project using Sparkler. As an example, right-click on Example1.xtend
   and select Run As > Java Application, then open a browser to http://localhost:4567/
 
 Deployment
