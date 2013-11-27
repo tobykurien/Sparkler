@@ -23,32 +23,36 @@ import spark.Response
  * @see http://code.google.com/p/spark-java/#Examples
  */
 class Example3 {
+   // hardcoded example usernames and passwords
    var static auths = #{
       "foo" -> "bar",
       "admin" -> "admin"
    }
-   
+
    def static void main(String[] args) {
-   	before [req, res, filter|
-   	   var user = req.queryParams("user")
+      // Global before filter for authentication
+      before [ req, res, filter |
+         var user = req.queryParams("user")
          var password = req.queryParams("user")
-         
          var dbPassword = auths.get(user)
          if (!(password != null && password.equals(dbPassword))) {
             filter.haltFilter(401, "You are not welcome here!!!")
          }
-   	]
-   	
-   	before("/hello") [req, res, filter|
-   	   res.header("Foo", "Set by second before filter")
-   	]
-   	
-      get("/hello") [req, res|
+      ]
+
+      // filter for /hello
+      before("/hello") [ req, res, filter |
+         res.header("Foo", "Set by second before filter")
+      ]
+
+      // actual /hello route
+      get("/hello") [ req, res |
          "Hello World!"
       ]
 
-      after("/hello") [req, res, filter|
+      // filter that runs after /hello
+      after("/hello") [ req, res, filter |
          res.header("spark", "added by after-filter")
-      ]   	
+      ]
    }
 }
