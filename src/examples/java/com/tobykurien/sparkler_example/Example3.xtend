@@ -33,7 +33,7 @@ class Example3 {
       // Global before filter for authentication
       before [ req, res, filter |
          var user = req.queryParams("user")
-         var password = req.queryParams("user")
+         var password = req.queryParams("password")
          var dbPassword = auths.get(user)
          if (!(password != null && password.equals(dbPassword))) {
             filter.haltFilter(401, "You are not welcome here!!!")
