@@ -20,37 +20,36 @@ class JsonModelTransformer extends ResponseTransformerRoute {
       this.handler = handler      
    }
    
-   override render(Object model) {
-      Base.open(DatabaseManager.newDataSource)
-      try {
-         if (model instanceof Model) {
-            return (model as Model).toJson(false)
-         } else if (model instanceof LazyList) {
-            return (model as LazyList).toJson(false)
-         } else if (model == null) {
-            null
-         } else {
-            '''{ 'result': '«model.toString.replace("'", "\\'")»' }'''
-         }         
-      } finally {
-         Base.close()
-      }
+   override render(Object json) {
+      return json.toString
    } 
+   
+   def escapeString(String s) {
+      s.replace("'", "\\'")      
+   }
    
    override handle(Request request, Response response) {
       try {
          Base.open(DatabaseManager.newDataSource)
-         var ret = handler.apply(request, response)
+         var model = handler.apply(request, response)
          
-         if (ret == null) {
-            // not found
+         if (model == null) {
             response.status(404)
-            response.body("Object not found")
+            "{'error': 'Object not found'}"
+         } else {
+            if (model instanceof Model) {
+               return (model as Model).toJson(false)
+            } else if (model instanceof LazyList) {
+               return (model as LazyList).toJson(false)
+            } else if (model == null) {
+               null
+            } else {
+               '''{ 'result': '«model.toString.escapeString»' }'''
+            }         
          }
-         
-         ret
       } catch (Exception e) {
-         Helper.handleError(request, response, e)
+         var error = Helper.handleError(request, response, e)
+         '''{'error': '«error.escapeString»'}'''
       } finally {
          Base.close()
       }
