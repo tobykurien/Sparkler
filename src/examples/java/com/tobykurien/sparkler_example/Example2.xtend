@@ -32,7 +32,7 @@ class Example2 {
       
       // Creates a new book resource, will return the ID to the created resource
       // author and title are sent as query parameters e.g. /books?author=Foo&title=Bar
-      get(new JsonModelTransformer("/books+") [req, res|
+      put(new JsonModelTransformer("/books") [req, res|
          book.createIt(
             "title", req.queryParams("title"),
             "author", req.queryParams("author"))     
