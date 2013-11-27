@@ -9,6 +9,7 @@ import static com.tobykurien.sparkler.Sparkler.*
 /**
  * A simple RESTful example showing howto create, get, update and delete book resources.
  * The database configuration is stored in /config/database.yml
+ * Manage the database by running (from project root): java -jar libs/h2-1.3.174.jar
  * 
  * @see http://code.google.com/p/spark-java/#Examples
  */
@@ -19,21 +20,22 @@ class Example2 {
       
       // Gets all available book resources (id's)
       get(new JsonModelTransformer("/books") [req, res|
-         // JsonModelTransform can take a Model (or LazyList of Models) and generate JSON
+         // JsonModelTransform provides db connection, and can take a Model 
+         // (or LazyList of Models) and generate JSON
          book.findAll
       ])
        
       // Gets the book resource for the provided id
       get(new JsonModelTransformer("/books/:id") [req, res|
-         book.findById(req.params("id")) as Book
+         book.findById(req.params("id"))
       ])
       
       // Creates a new book resource, will return the ID to the created resource
       // author and title are sent as query parameters e.g. /books?author=Foo&title=Bar
-      post(new JsonModelTransformer("/books") [req, res|
+      get(new JsonModelTransformer("/books+") [req, res|
          book.createIt(
             "title", req.queryParams("title"),
-            "author", req.queryParams("author")) as Book         
+            "author", req.queryParams("author"))     
       ])
       
       // Updates the book resource for the provided id with new information
