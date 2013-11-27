@@ -30,6 +30,6 @@
 	<classpathentry kind="lib" path="libs/snakeyaml-1.11.jar"/>
 	<classpathentry kind="lib" path="libs/h2-1.3.174.jar"/>
 	<classpathentry kind="lib" path="libs/javalite-common-1.4.9-SNAPSHOT.jar"/>
-	<classpathentry kind="lib" path="libs/activejdbc-1.4.9-tobykurien-1.jar"/>
+	<classpathentry kind="lib" path="libs/activejdbc-1.4.9-tobykurien-2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

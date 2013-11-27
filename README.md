@@ -176,7 +176,7 @@ MIT
   [Spark]: http://sparkjava.com
   [Jetty]: http://www.eclipse.org/jetty/
   [Mustache.java]: https://github.com/spullara/mustache.java
-  [activejdbc]: https://code.google.com/p/activejdbc/
+  [activejdbc]: https://github.com/tobykurien/activejdbc
   [Jackson]: https://github.com/FasterXML/jackson
   [Carbon 5]: https://code.google.com/p/c5-db-migration/
   [Apache DBCP]: https://commons.apache.org/proper/commons-dbcp/

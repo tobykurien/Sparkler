@@ -9,9 +9,10 @@ import org.apache.commons.dbcp.PoolableConnectionFactory
 import org.apache.commons.dbcp.PoolingDataSource
 import org.apache.commons.pool.impl.GenericObjectPool
 import org.yaml.snakeyaml.Yaml
+import org.javalite.activejdbc.Registry
+import java.util.Properties
 
 class DatabaseManager {
-   var static String rootPackage
    var static Map<String,String> dbConfig
    
    /**
@@ -21,8 +22,13 @@ class DatabaseManager {
     * are stored. Sub-packages will also be searched for database models.
     */
    def static init(String modelsPackageName) {
-      rootPackage = modelsPackageName
-//TODO: pass rootPackage to activeJDBC
+      // initialize ActiveJDBC with correct parameters
+      var p = new Properties
+      p.put("model.loader.strategy", "auto")
+      p.put("model.loader.package", modelsPackageName)
+      //p.put("cache.manager", "") // add OSCache cache manager here
+      Registry.instance.configuration.init(p)
+
       // load the database config
       var yaml = new Yaml()
       var config = yaml.load(new FileInputStream("config/database.yml")) as Map<String,Map<String,String>> 
