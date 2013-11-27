@@ -33,23 +33,28 @@ class Example2 {
       post(new JsonModelTransformer("/books") [req, res|
          book.createIt(
             "title", req.queryParams("title"),
-            "author", req.queryParams("author")
-         ) as Book         
+            "author", req.queryParams("author")) as Book         
       ])
       
       // Updates the book resource for the provided id with new information
       // author and title are sent as query parameters e.g. /books/<id>?author=Foo&title=Bar
-      put(new JsonModelTransformer("/books/:id") [req, res|
-         book.findById(req.params("id"))?.set(
-            "title, author",
-            #[req.params("title"), req.params("author")]
-         ).saveIt        
+      post(new JsonModelTransformer("/books/:id") [req, res|
+         // JsonModelTransformer will return other data types as: {'result': '[object.toString]'}
+         var b = book.findById(req.params("id"))
+         if (b != null) {
+           b.set(
+             "title", req.queryParams("title"), 
+             "author", req.queryParams("author"))
+           b.saveIt
+         }
+         
+         b
       ])
       
       // Deletes the book resource for the provided id 
-      delete("/books/:id") [req, res|
-         book.findById(req.params("id")).delete
-      ]
+      delete(new JsonModelTransformer("/books/:id") [req, res|
+         book.findById(req.params("id"))?.delete
+      ])
    }
 }
 

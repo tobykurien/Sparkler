@@ -30,7 +30,7 @@ class JsonModelTransformer extends ResponseTransformerRoute {
          } else if (model == null) {
             null
          } else {
-            model.toString
+            '''{ 'result': '«model.toString.replace("'", "\\'")»' }'''
          }         
       } finally {
          Base.close()
