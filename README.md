@@ -117,7 +117,7 @@ This would evaluate and include the contents of `templates/my_partial.html`, whi
 access to all the variables in scope within `templates/main.html`.
 
 #### Template Inheritance ####
-Template inheritance are also supported by Mustache.java. You can create `templates/base.html` with:
+Template inheritance is also supported by Mustache.java. You can create `templates/base.html` with:
 ```html
 <html>
 <head><title>{{$title}}Sparkler examples{{/title}}</title></head>
@@ -146,7 +146,7 @@ You can now use that as a layout in `templates/example1.html` as follows:
 {{/base}}
 ```
 
-This works like the Jinja2 templating engine, where named sections from the base file 
+This works like the Jinja2 templating engine, where named blocks from the base file 
 are overriden by the sub-template.
 
 ### Filters ###
@@ -202,7 +202,7 @@ allow you to manage your database.
 ### Environments ###
 
 You can run Sparkler in various environments, e.g. development, test, or production. By default, Sparkler 
-runs in "production" mode, to run in "development" mode, add "-Denvironment=development" to your java 
+runs in "production" mode. To run in "development" mode, add `-Denvironment=development` to your java 
 startup arguments.
 
 Getting Started
@@ -215,6 +215,13 @@ To use Sparkler in it's current state:
 * You should now be able to run the examples from the src/examples source tree, and 
   create your own project using Sparkler. As an example, right-click on Example1.java
   and select Run As > Java Application, then open a browser to http://localhost:4567/
+
+Deployment
+----------------
+
+Sparkler applications are self-contained, so they can be copied to a server that has Java 1.6+, and 
+run from there using the embedded Jetty. You can also deploy the application into a servlet container like 
+Tomcat/Resin/Jetty - see here for details: http://sparkjava.com/readme.html#title17
 
 References
 ------------
