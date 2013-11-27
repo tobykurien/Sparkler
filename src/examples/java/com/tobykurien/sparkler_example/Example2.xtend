@@ -8,6 +8,8 @@ import static com.tobykurien.sparkler.Sparkler.*
 
 /**
  * A simple RESTful example showing howto create, get, update and delete book resources.
+ * The database configuration is stored in /config/database.yml
+ * 
  * @see http://code.google.com/p/spark-java/#Examples
  */
 class Example2 {

@@ -28,7 +28,7 @@ class JsonModelTransformer extends ResponseTransformerRoute {
          } else if (model instanceof LazyList) {
             return (model as LazyList).toJson(false)
          } else if (model == null) {
-            ""
+            null
          } else {
             model.toString
          }         
@@ -40,7 +40,15 @@ class JsonModelTransformer extends ResponseTransformerRoute {
    override handle(Request request, Response response) {
       try {
          Base.open(DatabaseManager.newDataSource)
-         handler.apply(request, response)
+         var ret = handler.apply(request, response)
+         
+         if (ret == null) {
+            // not found
+            response.status(404)
+            response.body("Object not found")
+         }
+         
+         ret
       } catch (Exception e) {
          Helper.handleError(request, response, e)
       } finally {
