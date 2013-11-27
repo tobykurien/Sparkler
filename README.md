@@ -19,8 +19,8 @@ Tech
 
 Sparkler uses best-of-breed technologies and is (currently) based on:
 
-* [Xtend] - is a flexible and expressive dialect of Java, which compiles into readable Java 5 compatible source code. Think: CoffeeScript for Java
-* [Spark] high-performance Sinatra-inspired web framework
+* [Xtend] a flexible and expressive dialect of Java, which compiles into readable Java 5 compatible source code. Think: CoffeeScript for Java
+* [Spark] high-performance Sinatra-inspired web micro-framework
 * [Jetty] high-performance embedded server (supports servlets, SPDY, WebSockets)
 * [Mustache.java] for logic-less templating (with Django-style template inheritance)
 * [ActiveJDBC] ActiveRecord-style ORM library (using a modified fork)
@@ -37,10 +37,12 @@ Features
 * Quick turn-around: in Debug mode, hot code replacement is supported. Simply edit your code and reload the web page.
 * Ruby-like code syntax thanks to Xtend
 * Full IDE support in Eclipse (code-completion, refactoring, code formatting, etc.)
-* High-performance: based on high-performance components like Spark, Jetty and Jackson.
+* High-performance: based on components like Spark, Jetty and Jackson that have proven themselves in the [TechEmpower Benchmarks].
 
 Examples
 ------------
+
+### Routing ###
 
 Here's a basic (but complete) example of using Sparkler:
 
@@ -62,6 +64,8 @@ class Main {
 }
 ```
 
+### Templating ###
+
 An example of using the templating system:
 ```xtend
    // Rendering a Mustache template
@@ -76,7 +80,7 @@ An example of using the templating system:
    ]
 ```
 
-And in templates/example1.html:
+And in `templates/example1.html`:
 ```html
 <html>
 <head><title>Example 1</title></head>
@@ -92,7 +96,7 @@ And in templates/example1.html:
 </body>
 ```
 
-Run it and access http://localhost:4567/example1/hello to get the output, 
+Run it and access `http://localhost:4567/example1/hello` to get the output, 
 which looks like:
 ```text
  The message is: hello
@@ -103,8 +107,17 @@ which looks like:
     2. Name: Bob 
 ```
 
-Partials and template inheritance are also supported by Mustache.java. You can 
-create templates/base.html with:
+#### Partials ####
+You can include a template into another template, for example in `templates/main.html`:
+```html
+{{> my_partial}}
+```
+
+This would evaluate and include the contents of `templates/my_partial.html`, which would have 
+access to all the variables in scope within `templates/main.html`.
+
+#### Template Inheritance ####
+Template inheritance are also supported by Mustache.java. You can create `templates/base.html` with:
 ```html
 <html>
 <head><title>{{$title}}Sparkler examples{{/title}}</title></head>
@@ -120,7 +133,7 @@ create templates/base.html with:
 </html>
 ```
 
-You can now use that as a layout in templates/example1.html as follows:
+You can now use that as a layout in `templates/example1.html` as follows:
 ```html
 {{< base}}
 
@@ -135,6 +148,62 @@ You can now use that as a layout in templates/example1.html as follows:
 
 This works like the Jinja2 templating engine, where named sections from the base file 
 are overriden by the sub-template.
+
+### Filters ###
+
+You can add `before` and `after` filters to your routes for things like authentication. An example filter:
+```xtend
+   before("/admin") [ req, res, filter |
+      var password = req.queryParams("user")
+      if (!password.equals("openSesame")) {
+         filter.haltFilter(401, "You are not welcome here!!!")
+      }
+   ]
+```
+
+### JSON RESTful API interfaces ###
+
+You can quickly and easily create JSON RESTful API for data stored in a database as follows:
+```xtend
+class Book extends Model {
+   // data model is inferred from the database
+}
+
+class JsonRestApi {
+   def static void main(String[] args) {
+      DatabaseManager.init(JsonRestApi.package.name) // init db with package containing db models
+      val book = Model.with(typeof(Book)) // get reference to ModelContext for Book
+      
+      // Gets all available book resources (id's)
+      get(new JsonModelTransformer("/books") [req, res|
+         book.findAll
+      ])
+      
+      // Creates a new book resource
+      // author and title are sent as query parameters e.g. /books?author=Foo&title=Bar
+      put(new JsonModelTransformer("/books") [req, res|
+         book.createIt(
+            "title", req.queryParams("title"),
+            "author", req.queryParams("author"))     
+      ])
+      
+      // and so on for update, delete (see Example 2)      
+   }
+}      
+```
+
+The `JsonModelTransformer` class provides the database connection, and will automatically convert Model 
+objects (and lists) into JSON, as well as handle errors, etc.
+
+To configure the database, edit the `/config/database.yml` file. By default, Sparkler will use the embedded H2 
+database (which works like Sqlite). Running `java -jar libs/h2-1.3.174.jar` from the project root will 
+allow you to manage your database.
+
+### Environments ###
+
+You can run Sparkler in various environments, e.g. development, test, or production. By default, Sparkler 
+runs in "production" mode, to run in "development" mode, add "-Denvironment=development" to your java 
+startup arguments.
 
 Getting Started
 ----------------
