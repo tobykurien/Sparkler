@@ -1,0 +1,17 @@
+development:
+  driver: org.h2.Driver
+  database: jdbc:h2:db/development
+  user: sa
+  password: 
+  
+test:
+  driver: org.h2.Driver
+  database: jdbc:h2:db/test
+  user: sa
+  password: 
+
+production:
+  driver: org.h2.Driver
+  database: jdbc:h2:db/production
+  user: sa
+  password: 
