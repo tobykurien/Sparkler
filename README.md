@@ -211,10 +211,17 @@ Getting Started
 To use Sparkler in it's current state: 
 
 * Install Eclipse with the Xtend compiler (http://www.eclipse.org/xtend/download.html)
-* Clone this repository and import into Eclipse as a Java project
-* You should now be able to run the examples from the src/examples source tree, and 
-  create your own project using Sparkler. As an example, right-click on Example1.xtend
-  and select Run As > Java Application, then open a browser to http://localhost:4567/
+* Download a ZIP release from the releases folder (https://github.com/tobykurien/Sparkler/tree/master/releases)
+* Unzip this into a folder
+* From the unzipped folder, run: `./scripts/sparkler.sh app:init com.yourpackage.MainClassName`
+* A Sparkler project is now created for you. At this point, you should import the project into Eclipse and open 
+  the MainClassName.xtend and examine it. It should compile at this point, creating a src/main/xtend-gen source folder.
+* You can now run your app from the command line: `./scripts/dev_server.sh` or from Eclipse by right-clicking your 
+  MainClassName.xtend class and selecting Debug As > Java Application
+* You can create a database schema by defining the CREATE SQL statements in `config/database.schema`
+* Now create the database by running `./scripts/sparkler.sh db:init development`. If you haven't changed 
+  `config.database.yml`, this should create an H2 database in `db/development.db`
+* You can now use the database as per Example 2. (https://github.com/tobykurien/Sparkler/tree/master/src/examples/java/com/tobykurien/sparkler_example)
 
 Deployment
 ----------------
