@@ -1,9 +1,12 @@
 package com.tobykurien.sparkler_example
 
-import static extension com.tobykurien.sparkler.Sparkler.*
+import spark.servlet.SparkApplication
 
-class Example1 {
-   def static void main(String[] args) {
+import static com.tobykurien.sparkler.Sparkler.*
+
+class Example1 implements SparkApplication {
+   
+   override init() {
       // these are optional initializers, must be set before routes
       setPort(4567) // port to bind on startup, default is 4567
       staticFileLocation("/public") // where static files like images and javascript are served from
@@ -31,5 +34,9 @@ class Example1 {
             ] 
          })
       ]
+   }
+   
+   def static void main(String[] args) {
+      new Example1().init();
    }
 }

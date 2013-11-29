@@ -5,16 +5,19 @@ import com.tobykurien.sparkler.db.Model
 import com.tobykurien.sparkler.transformer.JsonModelTransformer
 
 import static com.tobykurien.sparkler.Sparkler.*
+import spark.servlet.SparkApplication
 
 /**
  * A simple RESTful example showing howto create, get, update and delete book resources.
  * The database configuration is stored in /config/database.yml
+ * You will need to manually initialize the database with config/database.schema
  * Manage the database by running (from project root): java -jar libs/h2-1.3.174.jar
  * 
  * @see http://code.google.com/p/spark-java/#Examples
  */
-class Example2 {
-   def static void main(String[] args) {
+class Example2 implements SparkApplication {
+
+   override init() {
       DatabaseManager.init(Example2.package.name) // init db with package containing db models
       val book = Model.with(typeof(Book)) // get reference to ModelContext for Book
       
@@ -58,6 +61,10 @@ class Example2 {
          book.findById(req.params("id"))?.delete
       ])
    }
+   
+   def static void main(String[] args) {
+      new Example2().init
+   }
 }
 
 /**
@@ -66,3 +73,4 @@ class Example2 {
 class Book extends Model {
    // data model is inferred from the database 
 }
+
