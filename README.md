@@ -172,7 +172,7 @@ class Book extends Model {
 class JsonRestApi {
    def static void main(String[] args) {
       DatabaseManager.init(JsonRestApi.package.name) // init db with package containing db models
-      val book = Model.with(typeof(Book)) // get reference to ModelContext for Book
+      val book = Model.with(Book) // get reference to ModelContext for Book
       
       // Gets all available book resources (id's)
       get(new JsonTransformer("/books") [req, res|

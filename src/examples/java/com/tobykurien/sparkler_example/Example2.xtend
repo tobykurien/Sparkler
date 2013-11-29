@@ -1,11 +1,12 @@
 package com.tobykurien.sparkler_example
 
 import com.tobykurien.sparkler.db.DatabaseManager
-import com.tobykurien.sparkler.db.Model
 import com.tobykurien.sparkler.transformer.JsonTransformer
+import org.javalite.activejdbc.Model
 import spark.servlet.SparkApplication
 
 import static com.tobykurien.sparkler.Sparkler.*
+import static extension com.tobykurien.sparkler.db.SModel.*
 
 /**
  * A simple RESTful example showing howto create, get, update and delete book resources.
@@ -19,7 +20,7 @@ class Example2 implements SparkApplication {
 
    override init() {
       DatabaseManager.init(Example2.package.name) // init db with package containing db models
-      val book = Model.with(typeof(Book)) // get reference to ModelContext for Book
+      val book = Model.with(Book)
       
       // Gets all available book resources (id's)
       get(new JsonTransformer("/books") [req, res|
