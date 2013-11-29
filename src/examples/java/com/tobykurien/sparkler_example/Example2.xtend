@@ -6,7 +6,6 @@ import org.javalite.activejdbc.Model
 import spark.servlet.SparkApplication
 
 import static com.tobykurien.sparkler.Sparkler.*
-import static extension com.tobykurien.sparkler.db.SModel.*
 
 /**
  * A simple RESTful example showing howto create, get, update and delete book resources.
