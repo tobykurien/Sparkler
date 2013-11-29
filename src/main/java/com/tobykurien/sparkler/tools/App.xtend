@@ -79,5 +79,29 @@ class «className» implements SparkApplication {
 </web-app>
       ''')      
       out2.close
+
+      // create startup script
+      var out3 = new FileWriter("scripts/dev_server.sh")
+      out3.write('''
+#!/bin/sh
+BASEDIR=$(dirname $0)
+
+cd $BASEDIR/..
+
+java -cp bin:libs/* -Denvironment=development «packageName + "." + className»
+      ''')      
+      out3.close
+
+      // create startup script
+      var out4 = new FileWriter("scripts/server.sh")
+      out4.write('''
+#!/bin/sh
+BASEDIR=$(dirname $0)
+
+cd $BASEDIR/..
+
+java -cp bin:libs/* -Denvironment=production «packageName + "." + className»
+      ''')      
+      out4.close
    }
 }
