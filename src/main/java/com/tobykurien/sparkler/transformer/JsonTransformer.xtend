@@ -2,9 +2,9 @@ package com.tobykurien.sparkler.transformer
 
 import com.tobykurien.sparkler.Helper
 import com.tobykurien.sparkler.db.DatabaseManager
-import com.tobykurien.sparkler.db.Model
 import org.javalite.activejdbc.Base
 import org.javalite.activejdbc.LazyList
+import org.javalite.activejdbc.Model
 import spark.Request
 import spark.Response
 import spark.ResponseTransformerRoute
