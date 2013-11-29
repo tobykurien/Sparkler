@@ -1,10 +1,8 @@
 package com.tobykurien.sparkler_example
 
-import spark.Filter
+import java.util.Date
 
 import static com.tobykurien.sparkler.Sparkler.*
-import spark.Request
-import spark.Response
 
 /**
  * Example showing a very simple (and stupid) autentication filter that is
@@ -53,6 +51,11 @@ class Example3 {
       // filter that runs after /hello
       after("/hello") [ req, res, filter |
          res.header("spark", "added by after-filter")
+      ]
+      
+      // global after filter adds date header
+      after [ req, res, filter |
+         res.raw().addDateHeader("Date", new Date().getTime())
       ]
    }
 }
