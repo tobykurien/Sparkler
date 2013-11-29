@@ -9,7 +9,8 @@ class Example1 implements SparkApplication {
    override init() {
       // these are optional initializers, must be set before routes
       setPort(4567) // port to bind on startup, default is 4567
-      staticFileLocation("/public") // where static files like images and javascript are served from
+      //staticFileLocation("/public") // this references static files inside JAR file
+      externalStaticFileLocation("/var/www/public") // external static files (css, js, jpg)
       
       // Simplest example
       get("/") [req, res|
@@ -28,10 +29,7 @@ class Example1 implements SparkApplication {
             "items" -> #[
                #{ "name" -> "Alice" },
                #{ "name" -> "Bob" }
-            ],
-            "uppercase" -> [String s|
-               s.toUpperCase
-            ] 
+            ]
          })
       ]
    }
