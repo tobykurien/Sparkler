@@ -29,6 +29,8 @@ class JsonModelTransformer extends ResponseTransformerRoute {
    }
    
    override handle(Request request, Response response) {
+      response.type("application/json")
+      
       try {
          Base.open(DatabaseManager.newDataSource)
          var model = handler.apply(request, response)
