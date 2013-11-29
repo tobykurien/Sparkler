@@ -2,10 +2,10 @@ package com.tobykurien.sparkler_example
 
 import com.tobykurien.sparkler.db.DatabaseManager
 import com.tobykurien.sparkler.db.Model
-import com.tobykurien.sparkler.transformer.JsonModelTransformer
+import com.tobykurien.sparkler.transformer.JsonTransformer
+import spark.servlet.SparkApplication
 
 import static com.tobykurien.sparkler.Sparkler.*
-import spark.servlet.SparkApplication
 
 /**
  * A simple RESTful example showing howto create, get, update and delete book resources.
@@ -22,20 +22,20 @@ class Example2 implements SparkApplication {
       val book = Model.with(typeof(Book)) // get reference to ModelContext for Book
       
       // Gets all available book resources (id's)
-      get(new JsonModelTransformer("/books") [req, res|
-         // JsonModelTransform provides db connection, and can take a Model 
+      get(new JsonTransformer("/books") [req, res|
+         // JsonTransform provides db connection, and can take a Model 
          // (or LazyList of Models) and generate JSON
          book.findAll
       ])
        
       // Gets the book resource for the provided id
-      get(new JsonModelTransformer("/books/:id") [req, res|
+      get(new JsonTransformer("/books/:id") [req, res|
          book.findById(req.params("id"))
       ])
       
       // Creates a new book resource, will return the ID to the created resource
       // author and title are sent as query parameters e.g. /books?author=Foo&title=Bar
-      put(new JsonModelTransformer("/books") [req, res|
+      put(new JsonTransformer("/books") [req, res|
          book.createIt(
             "title", req.queryParams("title"),
             "author", req.queryParams("author"))     
@@ -43,8 +43,8 @@ class Example2 implements SparkApplication {
       
       // Updates the book resource for the provided id with new information
       // author and title are sent as query parameters e.g. /books/<id>?author=Foo&title=Bar
-      post(new JsonModelTransformer("/books/:id") [req, res|
-         // JsonModelTransformer will return other data types as: {'result': '[object.toString]'}
+      post(new JsonTransformer("/books/:id") [req, res|
+         // JsonTransformer will return other data types as: {'result': '[object.toString]'}
          var b = book.findById(req.params("id"))
          if (b != null) {
            b.set(
@@ -57,7 +57,7 @@ class Example2 implements SparkApplication {
       ])
       
       // Deletes the book resource for the provided id 
-      delete(new JsonModelTransformer("/books/:id") [req, res|
+      delete(new JsonTransformer("/books/:id") [req, res|
          book.findById(req.params("id"))?.delete
       ])
    }

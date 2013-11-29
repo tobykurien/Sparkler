@@ -175,13 +175,13 @@ class JsonRestApi {
       val book = Model.with(typeof(Book)) // get reference to ModelContext for Book
       
       // Gets all available book resources (id's)
-      get(new JsonModelTransformer("/books") [req, res|
+      get(new JsonTransformer("/books") [req, res|
          book.findAll
       ])
       
       // Creates a new book resource
       // author and title are sent as query parameters e.g. /books?author=Foo&title=Bar
-      put(new JsonModelTransformer("/books") [req, res|
+      put(new JsonTransformer("/books") [req, res|
          book.createIt(
             "title", req.queryParams("title"),
             "author", req.queryParams("author"))     
@@ -192,7 +192,7 @@ class JsonRestApi {
 }      
 ```
 
-The `JsonModelTransformer` class provides the database connection, and will automatically convert Model 
+The `JsonTransformer` class provides the database connection, and will automatically convert Model 
 objects (and lists) into JSON, as well as handle errors, etc.
 
 To configure the database, edit the `/config/database.yml` file. By default, Sparkler will use the embedded H2 

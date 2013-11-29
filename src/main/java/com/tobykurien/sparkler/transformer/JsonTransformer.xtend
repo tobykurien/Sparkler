@@ -12,7 +12,7 @@ import spark.ResponseTransformerRoute
 /**
  * Returns a JSON serialized version of Model objects
  */
-class JsonModelTransformer extends ResponseTransformerRoute {
+class JsonTransformer extends ResponseTransformerRoute {
    var (Request, Response)=>Object handler
    
    new(String path, (Request, Response)=>Object handler) {
