@@ -212,10 +212,10 @@ To use Sparkler in it's current state:
 * Unzip this into a folder
 * From the unzipped folder, run: `./scripts/sparkler.sh app:init com.yourpackage.MainClassName`
 * A Sparkler project is now created for you. At this point, you should import the project into Eclipse and open 
-  the MainClassName.xtend and examine it. It should compile at this point, creating a src/main/xtend-gen source folder.
+  the `MainClassName.xtend` and examine it. It should now compile, creating a `src/main/xtend-gen` source folder.
 * You can now run your app from the command line: `./scripts/dev_server.sh` or from Eclipse by right-clicking your 
-  MainClassName.xtend class and selecting Run As > Java Application (don't forget to add the -Devnironment=development 
-  to the VM arguments if you are developing).
+  `MainClassName.xtend` class and selecting Run As > Java Application (don't forget to add the -Denvironment=development 
+  to the run configuration's VM arguments if you are developing).
   
 Database:
 * You can create a database schema by defining the CREATE SQL statements in `config/database.schema`
