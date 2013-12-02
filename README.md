@@ -25,10 +25,7 @@ Sparkler uses best-of-breed technologies and is (currently) based on:
 * [Mustache.java] for logic-less templating (with Django-style template inheritance)
 * [ActiveJDBC] ActiveRecord-style ORM library (using a modified fork)
 * [Apache DBCP] database connection pooling
-
-Planned integrations:
 * [Jackson] high-performance JSON processor
-* [Carbon 5] database migrations
 
 Features
 ------------
@@ -193,7 +190,7 @@ class JsonRestApi {
 ```
 
 The `JsonTransformer` class provides the database connection, and will automatically convert Model 
-objects (and lists) into JSON, as well as handle errors, etc.
+objects (and lists, or any other type of object) into JSON, as well as handle errors, etc.
 
 To configure the database, edit the `/config/database.yml` file. By default, Sparkler will use the embedded H2 
 database (which works like Sqlite). Running `java -jar libs/h2-1.3.174.jar` from the project root will 
@@ -217,7 +214,10 @@ To use Sparkler in it's current state:
 * A Sparkler project is now created for you. At this point, you should import the project into Eclipse and open 
   the MainClassName.xtend and examine it. It should compile at this point, creating a src/main/xtend-gen source folder.
 * You can now run your app from the command line: `./scripts/dev_server.sh` or from Eclipse by right-clicking your 
-  MainClassName.xtend class and selecting Debug As > Java Application
+  MainClassName.xtend class and selecting Run As > Java Application (don't forget to add the -Devnironment=development 
+  to the VM arguments if you are developing).
+  
+Database:
 * You can create a database schema by defining the CREATE SQL statements in `config/database.schema`
 * Now create the database by running `./scripts/sparkler.sh db:init development`. If you haven't changed 
   `config.database.yml`, this should create an H2 database in `db/development.db`
@@ -226,7 +226,7 @@ To use Sparkler in it's current state:
 Deployment
 ----------------
 
-Sparkler applications are self-contained, so they can be copied to a server that has Java 1.6+, and 
+Sparkler applications are self-contained, so they can be copied to a server that has Java 1.7+, and 
 run from there using the embedded Jetty. You can also deploy the application into a servlet container like 
 Tomcat/Resin/Jetty - see here for details: http://sparkjava.com/readme.html#title17
 
@@ -241,13 +241,14 @@ Sparkler that you can access:
 * Mustache.js templating: http://mustache.github.io/mustache.5.html
 * ActiveJDBC ORM: http://javalt.org/p/activejdbc
 * SnakeYAML for parsing YAML files: http://code.google.com/p/snakeyaml/wiki/Documentation
+* Jackson JSON processor: https://github.com/FasterXML/jackson-docs
 
 Limitations
 -------------
 
 Sparkler is currently work-in-progress. Here are some notable limitations:
 
-* Maven build doesn't currently work. You need to use Eclipse with Xtend compiler installed.
+* Maven build doesn't currently work. You need to use Eclipse with Xtend compiler installed, or use the pre-build releases.
 * Test environment not supported yet (doesn't delete and re-create the database).
 * Migrations not yet supported.
 * No REPL.
