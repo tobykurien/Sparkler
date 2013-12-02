@@ -26,7 +26,7 @@ class JsonTransformer extends ResponseTransformerRoute {
    } 
    
    def escapeString(String s) {
-      s.replace("'", "\\'")      
+      s.replace("\"", "\\\"")     
    }
    
    override handle(Request request, Response response) {
