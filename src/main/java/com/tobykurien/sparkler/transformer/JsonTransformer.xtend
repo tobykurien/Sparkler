@@ -1,5 +1,6 @@
 package com.tobykurien.sparkler.transformer
 
+import com.fasterxml.jackson.databind.ObjectMapper
 import com.tobykurien.sparkler.Helper
 import com.tobykurien.sparkler.db.DatabaseManager
 import org.javalite.activejdbc.Base
@@ -30,11 +31,11 @@ class JsonTransformer extends ResponseTransformerRoute {
    
    override handle(Request request, Response response) {
       response.type("application/json")
-      
+
       try {
          Base.open(DatabaseManager.newDataSource)
          var model = handler.apply(request, response)
-         
+
          if (model == null) {
             response.status(404)
             "{'error': 'Object not found'}"
@@ -46,12 +47,14 @@ class JsonTransformer extends ResponseTransformerRoute {
             } else if (model == null) {
                null
             } else {
-               '''{ 'result': '«model.toString.escapeString»' }'''
-            }         
+               new ObjectMapper().writeValueAsString(model);
+            }
          }
       } catch (Exception e) {
+         response.status(500)
          var error = Helper.handleError(request, response, e)
-         '''{'error': '«error.escapeString»'}'''
+         System.err.println(error)
+         "{\"error\" : \""+ error.escapeString + "\"}"
       } finally {
          Base.close()
       }
