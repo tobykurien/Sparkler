@@ -202,6 +202,28 @@ You can run Sparkler in various environments, e.g. development, test, or product
 runs in "production" mode. To run in "development" mode, add `-Denvironment=development` to your java 
 startup arguments.
 
+### Testing ###
+
+You can test using JUnit and [JSpec]. To write a test, simply create a class that extends `TestSupport`:
+```
+class Example2Test extends TestSupport {
+   
+   override getModelPackageName() {
+      return Example2.package.name
+   }
+   
+   @Test
+   def simpleTest() {
+      val book = Model.with(Book)
+      var newBook = book.createIt("title", "Test", "Author", "Toby Kurien")
+      a(newBook.id).shouldNotBeNull
+      a(newBook.get("author")).shouldBeEqual("Toby Kurien")
+      the(book.findAll.length).shouldBeEqual(1)
+   }
+   
+}
+```
+
 Getting Started
 ----------------
 
@@ -240,6 +262,7 @@ Sparkler that you can access:
 * Spark Java framework: http://sparkjava.com/readme.html
 * Mustache.js templating: http://mustache.github.io/mustache.5.html
 * ActiveJDBC ORM: http://javalt.org/p/activejdbc
+* JSpec testing: http://javalt.org/p/jspec
 * SnakeYAML for parsing YAML files: http://code.google.com/p/snakeyaml/wiki/Documentation
 * Jackson JSON processor: https://github.com/FasterXML/jackson-docs
 
@@ -249,9 +272,9 @@ Limitations
 Sparkler is currently work-in-progress. Here are some notable limitations:
 
 * Maven build doesn't currently work. You need to use Eclipse with Xtend compiler installed, or use the pre-build releases.
-* Test environment not supported yet (doesn't delete and re-create the database).
 * Migrations not yet supported.
 * No REPL.
+* No support for fixtures in tests.
 
 License
 ----------
@@ -268,3 +291,5 @@ MIT
   [Jackson]: https://github.com/FasterXML/jackson
   [Carbon 5]: https://code.google.com/p/c5-db-migration/
   [Apache DBCP]: https://commons.apache.org/proper/commons-dbcp/
+  [JSpec]: http://javalt.org/p/jspec
+  
