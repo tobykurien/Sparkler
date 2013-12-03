@@ -205,11 +205,11 @@ startup arguments.
 ### Testing ###
 
 You can test using JUnit and [JSpec]. To write a test, simply create a class that extends `TestSupport`:
-```
+```xtend
 class Example2Test extends TestSupport {
    
    override getModelPackageName() {
-      return Example2.package.name
+      return Example2.package.name  // package containing our Model classes
    }
    
    @Test
@@ -244,6 +244,7 @@ Database:
 * Now create the database by running `./scripts/sparkler.sh db:init development`. If you haven't changed 
   `config.database.yml`, this should create an H2 database in `db/development.db`
 * You can now use the database as per Example 2. (https://github.com/tobykurien/Sparkler/tree/master/src/examples/java/com/tobykurien/sparkler_example)
+* To manage the H2 database, from the project root, run `java -jar libs/h2-1.3.174.jar`
 
 Deployment
 ----------------
