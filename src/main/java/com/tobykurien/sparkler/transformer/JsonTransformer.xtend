@@ -38,14 +38,12 @@ class JsonTransformer extends ResponseTransformerRoute {
 
          if (model == null) {
             response.status(404)
-            "{'error': 'Object not found'}"
+            "{\"error\": \"Object not found\"}"
          } else {
             if (model instanceof Model) {
                return (model as Model).toJson(false)
             } else if (model instanceof LazyList) {
                return (model as LazyList).toJson(false)
-            } else if (model == null) {
-               null
             } else {
                new ObjectMapper().writeValueAsString(model);
             }
