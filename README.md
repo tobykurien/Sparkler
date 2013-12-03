@@ -226,7 +226,7 @@ class Example2Test extends TestSupport {
 
 You can now right-click the class and select `Run As > JUnit Test`. Each time the tests are run, the database 
 defined in the test environment in `config/database.yml` is reset (all tables dropped and the database schema 
-reloaded). This does not happen for each test in your class, but rather once before the tests are run.
+reloaded). This currently happens for each test in your class.
 
 Getting Started
 ----------------
