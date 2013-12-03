@@ -1,0 +1,10 @@
+Todo:
+=====
+
+- Need logging facility to log requests, exceptions, and activeJDBC queries
+- SparklerTool to support console, db:migrate
+
+Other:
+======
+- Modified headers for caching purposes (Last-Modified, etc.)
+- Add caching to ActiveJDBC (OSCache)
