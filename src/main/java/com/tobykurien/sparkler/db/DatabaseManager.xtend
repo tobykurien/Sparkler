@@ -31,7 +31,7 @@ class DatabaseManager {
       Registry.instance.configuration.init(p)
       if (!"production".equalsIgnoreCase(Helper.environment)) {
          // log activejdbc queries only
-         LogFilter.setLogExpression(".*Query.*");
+         LogFilter.setLogExpression("Query\\:.*");
       }
 
       // load the database config
