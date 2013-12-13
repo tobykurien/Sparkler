@@ -30,8 +30,8 @@ class DatabaseManager {
       //p.put("cache.manager", "") // add OSCache cache manager here
       Registry.instance.configuration.init(p)
       if (!"production".equalsIgnoreCase(Helper.environment)) {
-         // log all activejdbc stuff
-         LogFilter.setLogExpression(".*");
+         // log activejdbc queries only
+         LogFilter.setLogExpression(".*Query.*");
       }
 
       // load the database config
