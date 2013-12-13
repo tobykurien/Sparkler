@@ -24,8 +24,6 @@
 	<classpathentry kind="lib" path="libs/spark-core-1.1.1.jar"/>
 	<classpathentry kind="lib" path="libs/compiler-0.8.13.jar"/>
 	<classpathentry kind="lib" path="libs/guava-13.0.1.jar"/>
-	<classpathentry kind="lib" path="libs/org.eclipse.xtend.lib_2.4.3.v201309030823.jar"/>
-	<classpathentry kind="lib" path="libs/org.eclipse.xtext.xbase.lib_2.4.3.v201309030823.jar"/>
 	<classpathentry kind="lib" path="libs/commons-pool-1.5.4.jar"/>
 	<classpathentry kind="lib" path="libs/commons-dbcp-1.4.jar"/>
 	<classpathentry kind="lib" path="libs/snakeyaml-1.11.jar"/>
