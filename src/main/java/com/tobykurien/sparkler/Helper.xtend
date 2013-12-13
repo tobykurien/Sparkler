@@ -2,13 +2,18 @@ package com.tobykurien.sparkler
 
 import spark.Request
 import spark.Response
+import com.tobykurien.sparkler.utils.Log
 
 class Helper {
    var static String env = null
    
-   def static handleError(Request request, Response response, Exception e) {
-      response.status(500)
+   def static handleError(Request request, Response response, int status, Exception e) {
+      response.status(status)
       e.class.name + ": " + e.message + "<br/>" + e.stackTrace.join("<br/>")
+   }
+
+   def static handleError(Request request, Response response, Exception e) {
+      handleError(request, response, 500, e)
    }
 
    def static setEnvironment(String environ) {
@@ -24,7 +29,7 @@ class Helper {
       if (ret == null) ret = "production"
       env = ret
       
-      System.out.println("Using environment " + env)
+      Log.i("env", "Using environment " + env)
       return env
    }
 }
