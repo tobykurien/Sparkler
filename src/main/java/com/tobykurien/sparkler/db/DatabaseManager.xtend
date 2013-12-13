@@ -11,6 +11,7 @@ import org.apache.commons.pool.impl.GenericObjectPool
 import org.yaml.snakeyaml.Yaml
 import org.javalite.activejdbc.Registry
 import java.util.Properties
+import org.javalite.activejdbc.LogFilter
 
 class DatabaseManager {
    var static Map<String,String> dbConfig
@@ -28,6 +29,10 @@ class DatabaseManager {
       p.put("model.loader.package", modelsPackageName)
       //p.put("cache.manager", "") // add OSCache cache manager here
       Registry.instance.configuration.init(p)
+      if (!"production".equalsIgnoreCase(Helper.environment)) {
+         // log all activejdbc stuff
+         LogFilter.setLogExpression(".*");
+      }
 
       // load the database config
       var yaml = new Yaml()

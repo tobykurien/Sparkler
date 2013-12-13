@@ -4,7 +4,7 @@ import spark.Request
 import spark.Response
 
 class Helper {
-   var static env = null
+   var static String env = null
    
    def static handleError(Request request, Response response, Exception e) {
       response.status(500)
