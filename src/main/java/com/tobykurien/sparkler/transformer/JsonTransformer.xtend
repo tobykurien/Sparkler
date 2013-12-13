@@ -28,6 +28,12 @@ class JsonTransformer extends ResponseTransformerRoute {
    def escapeString(String s) {
       s.replace("\"", "\\\"")     
    }
+
+   def returnError(Request request, Response response, Exception e) {
+      var error = Helper.handleError(request, response, e)
+      System.err.println(error)
+      "{\"error\" : \""+ error.escapeString + "\"}"
+   }
    
    override handle(Request request, Response response) {
       response.type("application/json")
@@ -41,18 +47,23 @@ class JsonTransformer extends ResponseTransformerRoute {
             "{\"error\": \"Object not found\"}"
          } else {
             if (model instanceof Model) {
-               return (model as Model).toJson(false)
+               return new ObjectMapper().writeValueAsString(
+                  (model as Model).toMap
+               )
             } else if (model instanceof LazyList) {
-               return (model as LazyList).toJson(false)
+               return new ObjectMapper().writeValueAsString(
+                  (model as LazyList).toMaps
+               )
             } else {
                new ObjectMapper().writeValueAsString(model);
             }
          }
+      } catch (RestfulException e) {
+         response.status(e.status)
+         returnError(request, response, e)
       } catch (Exception e) {
          response.status(500)
-         var error = Helper.handleError(request, response, e)
-         System.err.println(error)
-         "{\"error\" : \""+ error.escapeString + "\"}"
+         returnError(request, response, e)
       } finally {
          Base.close()
       }
