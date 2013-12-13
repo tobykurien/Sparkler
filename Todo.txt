@@ -3,6 +3,7 @@ Todo:
 
 - Need logging facility to log requests, exceptions, and activeJDBC queries
 - SparklerTool to support console, db:migrate
+- WebSocket support
 
 Other:
 ======

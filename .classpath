@@ -35,5 +35,7 @@
 	<classpathentry kind="lib" path="libs/jackson-annotations-2.2.3.jar"/>
 	<classpathentry kind="lib" path="libs/jackson-core-2.2.3.jar"/>
 	<classpathentry kind="lib" path="libs/jackson-databind-2.2.3.jar"/>
+	<classpathentry kind="lib" path="libs/org.eclipse.xtend.lib_2.5.0.v201312110906.jar"/>
+	<classpathentry kind="lib" path="libs/org.eclipse.xtext.xbase.lib_2.5.0.v201312110906.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
