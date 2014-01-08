@@ -1,10 +1,10 @@
 buildscript {
-	repositories {
-		mavenCentral()
-		maven { url "http://build.eclipse.org/common/xtend/maven/" }
-	}
+        repositories {
+                mavenCentral()
+                maven { url "http://build.eclipse.org/common/xtend/maven/" }
+        }
 
-	dependencies { classpath 'org.eclipse.xtend:org.eclipse.xtend.standalone:2.4.3' }
+        dependencies { classpath 'org.eclipse.xtend:org.eclipse.xtend.standalone:2.4.3' }
 }
 
 apply plugin: 'java'
@@ -15,36 +15,35 @@ archivesBaseName = 'sparkler'
 sourceCompatibility = 1.6
 
 repositories {
-	mavenCentral()
-	maven { url "http://build.eclipse.org/common/xtend/maven/" }
+        mavenCentral()
+        maven { url "http://build.eclipse.org/common/xtend/maven/" }
 }
 
 dependencies {
 
-	compile 'org.eclipse.xtend:org.eclipse.xtend.lib:2.4.3'
-	compile 'org.eclipse.xtext:org.eclipse.xtext.xbase.lib:2.4.3'
-	compile 'com.sparkjava:spark-core:1.1.1'
-	compile 'org.javalite:javalite-common:1.4.8'
-	compile 'mysql:mysql-connector-java:5.0.4'
-	compile 'org.xerial:sqlite-jdbc:3.7.2'
-	
-	compile 'commons-dbcp:commons-dbcp:1.4'
-	compile files('libs/activejdbc-1.4.9-tobykurien-2.jar')
-	compile 'com.fasterxml.jackson.core:jackson-databind:2.3.0'
-	compile 'org.slf4j:slf4j-simple:1.7.5'
-	
-	compile 'org.yaml:snakeyaml:1.13'
-	compile 'com.github.spullara.mustache.java:compiler:0.8.13'
-	
-	testCompile 'junit:junit:4.10'
-	
+        compile 'org.eclipse.xtend:org.eclipse.xtend.lib:2.4.3'
+        compile 'org.eclipse.xtext:org.eclipse.xtext.xbase.lib:2.4.3'
+        compile 'com.sparkjava:spark-core:1.1.1'
+        compile 'org.javalite:javalite-common:1.4.8'
+        compile 'mysql:mysql-connector-java:5.0.4'
+        compile 'org.xerial:sqlite-jdbc:3.7.2'
+
+        compile 'commons-dbcp:commons-dbcp:1.4'
+        compile files('libs/activejdbc-1.4.9-tobykurien-2.jar')
+        compile 'com.fasterxml.jackson.core:jackson-databind:2.3.0'
+        compile 'org.slf4j:slf4j-simple:1.7.5'
+
+        compile 'org.yaml:snakeyaml:1.13'
+        compile 'com.github.spullara.mustache.java:compiler:0.8.13'
+
+        testCompile 'junit:junit:4.10'
 }
 
 eclipse {
-	project {
-		natures 'org.eclipse.xtext.ui.shared.xtextNature'
-		buildCommand 'org.eclipse.xtext.ui.shared.xtextBuilder'
-	}
+        project {
+                natures 'org.eclipse.xtext.ui.shared.xtextNature'
+                buildCommand 'org.eclipse.xtext.ui.shared.xtextBuilder'
+        }
 }
 
 import org.apache.log4j.BasicConfigurator
@@ -52,47 +51,59 @@ import org.eclipse.xtend.core.XtendStandaloneSetup
 import org.eclipse.xtend.core.compiler.batch.XtendBatchCompiler
 
 task compileXtend {
-	def srcPath = 'src/main/java'
-	def targetPath = 'src/main/xtend-gen'
-	inputs.dir file(srcPath)
-	outputs.dir file(targetPath)
+        def srcPath = 'src/main/java'
+        def targetPath = 'src/main/xtend-gen'
+        inputs.dir file(srcPath)
+        outputs.dir file(targetPath)
 
-	doLast {
-		def classpath = configurations.compile.asPath
+        doLast {
+                def classpath = configurations.compile.asPath
 
-		BasicConfigurator.configure()
-		XtendBatchCompiler compiler = new XtendStandaloneSetup().createInjectorAndDoEMFRegistration().getInstance(XtendBatchCompiler.class)
-		compiler.setOutputPath(targetPath)
-		compiler.setClassPath(classpath)
-		compiler.setSourcePath(srcPath)
-		if (!compiler.compile()) {
-			throw new GradleException("Xtend compilation failed.");
-		}
-	}
+                BasicConfigurator.configure()
+                XtendBatchCompiler compiler = new XtendStandaloneSetup().createInjectorAndDoEMFRegistration().getInstance(XtendBatchCompiler.class)
+                compiler.setOutputPath(targetPath)
+                compiler.setClassPath(classpath)
+                compiler.setSourcePath(srcPath)
+                if (!compiler.compile()) {
+                        throw new GradleException("Xtend compilation failed.");
+                }
+        }
 }
 task compileTestXtend {
-	def srcPath = 'src/test/java'
-	def targetPath = 'src/test/xtend-gen'
-	inputs.dir file(srcPath)
-	outputs.dir file(targetPath)
+        def srcPath = 'src/test/java'
+        def targetPath = 'src/test/xtend-gen'
+        inputs.dir file(srcPath)
+        outputs.dir file(targetPath)
 
-	doLast {
-		def classpath = configurations.testCompile.asPath
+        doLast {
+                def classpath = configurations.testCompile.asPath
 
-		BasicConfigurator.configure()
-		XtendBatchCompiler compiler = new XtendStandaloneSetup().createInjectorAndDoEMFRegistration().getInstance(XtendBatchCompiler.class)
-		compiler.setOutputPath(targetPath)
-		compiler.setClassPath(classpath)
-		compiler.setSourcePath(srcPath)
-		if (!compiler.compile()) {
-			throw new GradleException("Xtend compilation failed.");
-		}
-	}
+                BasicConfigurator.configure()
+                XtendBatchCompiler compiler = new XtendStandaloneSetup().createInjectorAndDoEMFRegistration().getInstance(XtendBatchCompiler.class)
+                compiler.setOutputPath(targetPath)
+                compiler.setClassPath(classpath)
+                compiler.setSourcePath(srcPath)
+                if (!compiler.compile()) {
+                        throw new GradleException("Xtend compilation failed.");
+                }
+        }
 }
 
+task release(type:Zip, dependsOn: jar) {
+        extension 'zip'
+        includeEmptyDirs = true
+        from ('assets') { exclude('**/delete.me') }
+        into ('libs') {
+                from new File(jar.destinationDir, jar.archiveName)
+                from configurations.compile.collect { it }
+        }
+}
+
+tasks.build.dependsOn release
+
 sourceSets {
-	main { java { srcDir 'src/main/xtend-gen' } }
-	test { java { srcDir 'src/test/xtend-gen' } }
+        main { java { srcDir 'src/main/xtend-gen' } }
+        test { java { srcDir 'src/test/xtend-gen' } }
 }
 
 
