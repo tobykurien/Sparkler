@@ -4,7 +4,7 @@ buildscript {
 		maven { url "http://build.eclipse.org/common/xtend/maven/" }
 	}
 
-	dependencies { classpath 'org.eclipse.xtend:org.eclipse.xtend.standalone:2.4.1' }
+	dependencies { classpath 'org.eclipse.xtend:org.eclipse.xtend.standalone:2.4.3' }
 }
 
 apply plugin: 'java'
@@ -22,7 +22,7 @@ repositories {
 dependencies {
 
 	compile 'org.eclipse.xtend:org.eclipse.xtend.lib:2.4.3'
-	compile 'org.eclipse.xtext:org.eclipse.xtext.xbase.lib:2.4.1'
+	compile 'org.eclipse.xtext:org.eclipse.xtext.xbase.lib:2.4.3'
 	compile 'com.sparkjava:spark-core:1.1.1'
 	compile 'org.javalite:javalite-common:1.4.8'
 	compile 'mysql:mysql-connector-java:5.0.4'
