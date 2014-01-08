@@ -27,17 +27,16 @@ dependencies {
 	compile 'org.javalite:javalite-common:1.4.8'
 	compile 'mysql:mysql-connector-java:5.0.4'
 	compile 'org.xerial:sqlite-jdbc:3.7.2'
-	
+
 	compile 'commons-dbcp:commons-dbcp:1.4'
 	compile files('libs/activejdbc-1.4.9-tobykurien-2.jar')
 	compile 'com.fasterxml.jackson.core:jackson-databind:2.3.0'
 	compile 'org.slf4j:slf4j-simple:1.7.5'
-	
+
 	compile 'org.yaml:snakeyaml:1.13'
 	compile 'com.github.spullara.mustache.java:compiler:0.8.13'
-	
+
 	testCompile 'junit:junit:4.10'
-	
 }
 
 eclipse {
@@ -89,6 +88,18 @@ task compileTestXtend {
 		}
 	}
 }
+
+task release(type:Zip, dependsOn: jar) {
+	extension 'zip'
+	includeEmptyDirs = true
+	from ('assets') { exclude('**/delete.me') }
+	into ('libs') {
+		from new File(jar.destinationDir, jar.archiveName)
+		from configurations.compile.collect { it }
+	}
+}
+
+tasks.build.dependsOn release
 
 sourceSets {
 	main { java { srcDir 'src/main/xtend-gen' } }
