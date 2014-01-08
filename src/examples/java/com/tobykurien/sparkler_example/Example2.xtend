@@ -10,8 +10,14 @@ import static com.tobykurien.sparkler.Sparkler.*
 /**
  * A simple RESTful example showing howto create, get, update and delete book resources.
  * The database configuration is stored in /config/database.yml
- * You will need to manually initialize the database with config/database.schema
- * Manage the database by running (from project root): java -jar libs/h2-1.3.174.jar
+ * To initialize your database with the schema in /config/database.schema, 
+ * run this from the project root:
+ * 
+ *    ./scripts/sparkler.sh db:init development
+ * 
+ * Manage the database by running (from project root): 
+ * 
+ *    java -jar libs/h2-1.3.174.jar
  * 
  * @see http://code.google.com/p/spark-java/#Examples
  */
