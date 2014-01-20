@@ -34,7 +34,7 @@ Please supply a command argument. Commands are:
       val db = new Database
       val app = new App
       
-      System.out.println("Sparkler v0.0.1\r\n")
+      System.out.println("Sparkler v0.0.4\r\n")
       
    	if (args.length == 0) {
    	   help

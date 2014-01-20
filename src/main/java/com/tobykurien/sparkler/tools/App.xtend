@@ -36,7 +36,10 @@ class «className» implements SparkApplication {
    override init() {
       // these are optional initializers, must be set before routes
       //setPort(4567) // port to bind on startup, default is 4567
-      //externalStaticFileLocation("/var/www/public") // external static files (css, js, jpg)
+
+      // Set up path to static files
+      val workingDir = System.getProperty("user.dir")
+      externalStaticFileLocation(workingDir + "/public")      
       
       // Homepage
       get("/") [req, res|
@@ -46,6 +49,31 @@ class «className» implements SparkApplication {
    
    def static void main(String[] args) {
       new «className»().init();
+   }
+}
+      ''')
+      out.close
+
+      // create a sample test class
+      classPath = "src/main/test/" + packageName.replace(".", "/")
+      f = new File(classPath)
+      f.mkdirs
+      out = new FileWriter(classPath + "/" + className + "Test.xtend")
+      out.write('''
+package «packageName»
+
+import com.tobykurien.sparkler.test.TestSupport
+import org.junit.Test
+
+class «className»Test extends TestSupport {
+   override getModelPackageName() {
+      // Where your database Model classes are
+      «className».package.name 
+   }
+   
+   @Test
+   def shouldPass() {
+      the("Hello message").shouldNotBeNull
    }
 }
       ''')

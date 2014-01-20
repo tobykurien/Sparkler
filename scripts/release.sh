@@ -9,18 +9,21 @@ then
     exit 1
 fi
 
+rm releases/$1.zip
 rm -rf releases/$1
 mkdir releases/$1
 mkdir releases/$1/libs
 cp -r libs/* releases/$1/libs
 cp -r assets/* releases/$1
+cp assets/.classpath releases/$1
+cp assets/.project releases/$1
 
 cd $BASEDIR/../bin
 jar cf $1.jar *
 mv $1.jar ../releases/$1/libs
 
 cd ../releases/
-zip -r $1.zip $1/*
+zip -r $1.zip $1/.classpath $1/.project $1/*
 rm -rf $1
 
 echo Done!
