@@ -265,9 +265,9 @@ Sparkler that you can access:
 
 * Xtend language: http://www.eclipse.org/xtend/documentation.html
 * Spark Java framework: http://sparkjava.com/readme.html
-* Mustache.js templating: http://mustache.github.io/mustache.5.html
-* ActiveJDBC ORM: http://javalt.org/p/activejdbc
-* JSpec testing: http://javalt.org/p/jspec
+* Mustache.java: https://github.com/spullara/mustache.java
+* ActiveJDBC ORM: http://javalite.io/activejdbc
+* JSpec testing: http://javalite.io/jspec
 * SnakeYAML for parsing YAML files: http://code.google.com/p/snakeyaml/wiki/Documentation
 * Jackson JSON processor: https://github.com/FasterXML/jackson-docs
 

@@ -55,7 +55,7 @@ class «className» implements SparkApplication {
       out.close
 
       // create a sample test class
-      classPath = "src/main/test/" + packageName.replace(".", "/")
+      classPath = "src/test/java/" + packageName.replace(".", "/")
       f = new File(classPath)
       f.mkdirs
       out = new FileWriter(classPath + "/" + className + "Test.xtend")

@@ -2,8 +2,8 @@
 <classpath>
    <classpathentry kind="src" path="src/main/xtend-gen"/>
    <classpathentry kind="src" path="src/main/webapp"/>
-   <classpathentry kind="src" path="src/main/test"/>
    <classpathentry kind="src" path="src/main/java"/>
+   <classpathentry kind="src" path="src/test/java"/>
 	<classpathentry kind="lib" path="libs/activejdbc-1.4.9-tobykurien-2.jar"/>
 	<classpathentry kind="lib" path="libs/commons-dbcp-1.4.jar"/>
 	<classpathentry kind="lib" path="libs/commons-pool-1.5.4.jar"/>
