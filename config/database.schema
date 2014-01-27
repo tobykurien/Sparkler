@@ -1,5 +1,8 @@
-create table books (
+create table presentations (
   id bigint auto_increment,
   title varchar(255),
-  author varchar(255)
-)
+  presenter_id bigint,
+  date varchar(255)
+);
+
+

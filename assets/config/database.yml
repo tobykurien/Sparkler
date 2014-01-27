@@ -15,3 +15,6 @@ production:
   database: jdbc:h2:db/production
   user: sa
   password: 
+  max_active: 256 # max active connections
+  max_idle: 256   # max idle connections
+  
