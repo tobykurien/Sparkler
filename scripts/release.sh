@@ -19,7 +19,7 @@ cp assets/.classpath releases/$1
 cp assets/.project releases/$1
 
 cd $BASEDIR/../bin
-jar cf $1.jar *
+jar cvf $1.jar `find . -name *.class`
 mv $1.jar ../releases/$1/libs
 
 cd ../releases/
