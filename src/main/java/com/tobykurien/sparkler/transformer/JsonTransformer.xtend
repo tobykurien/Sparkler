@@ -29,8 +29,8 @@ class JsonTransformer extends ResponseTransformerRoute {
       s.replace("\"", "\\\"")     
    }
 
-   def returnError(Request request, Response response, Exception e) {
-      var error = Helper.handleError(request, response, e)
+   def returnError(Request request, Response response, int statusCode, Exception e) {
+      var error = Helper.handleError(request, response, statusCode, e)
       System.err.println(error)
       "{\"error\" : \""+ error.escapeString + "\"}"
    }
@@ -59,11 +59,9 @@ class JsonTransformer extends ResponseTransformerRoute {
             }
          }
       } catch (RestfulException e) {
-         response.status(e.status)
-         returnError(request, response, e)
+         returnError(request, response, e.status, e)
       } catch (Exception e) {
-         response.status(500)
-         returnError(request, response, e)
+         returnError(request, response, 500, e)
       } finally {
          Base.close()
       }
