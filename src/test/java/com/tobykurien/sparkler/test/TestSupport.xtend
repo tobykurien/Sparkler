@@ -5,11 +5,8 @@ import com.tobykurien.sparkler.db.DatabaseManager
 import com.tobykurien.sparkler.tools.Database
 import org.javalite.activejdbc.Base
 import org.javalite.test.jspec.JSpecSupport
-import org.junit.After
-import org.junit.Before
 
 abstract class TestSupport extends JSpecSupport {
-   @Before
    def setUpDb() {
       Helper.setEnvironment("test")
       new Database().init(#["test"])
@@ -19,7 +16,6 @@ abstract class TestSupport extends JSpecSupport {
    
    abstract def String getModelPackageName()
    
-   @After
    def tearDownDb() {
       Base.close
    }   

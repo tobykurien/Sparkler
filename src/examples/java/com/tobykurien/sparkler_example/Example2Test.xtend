@@ -2,7 +2,6 @@ package com.tobykurien.sparkler_example
 
 import com.tobykurien.sparkler.test.TestSupport
 import org.javalite.activejdbc.Model
-import org.junit.Test
 
 class Example2Test extends TestSupport {
    
@@ -10,7 +9,6 @@ class Example2Test extends TestSupport {
       return Example2.package.name
    }
    
-   @Test
    def simpleTest() {
       val book = Model.with(Book)
       var newBook = book.createIt("title", "Test", "Author", "Toby Kurien")

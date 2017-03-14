@@ -1,28 +1,24 @@
+apply plugin: 'org.xtext.xtend'
+apply plugin: 'eu.appsatori.fatjar'
+
 buildscript {
         repositories {
-                mavenCentral()
-                maven { url "http://build.eclipse.org/common/xtend/maven/" }
+                jcenter()
         }
 
-        dependencies { classpath 'org.eclipse.xtend:org.eclipse.xtend.standalone:2.4.3' }
+        dependencies { 
+                classpath 'org.xtext:xtext-gradle-plugin:1.0.17'
+                classpath 'eu.appsatori:gradle-fatjar-plugin:0.3'
+        }
 }
 
-apply plugin: 'java'
-apply plugin: 'eclipse'
-
-version = '0.01-alpha'
-archivesBaseName = 'sparkler'
-sourceCompatibility = 1.6
-
 repositories {
-        mavenCentral()
-        maven { url "http://build.eclipse.org/common/xtend/maven/" }
+        jcenter()
 }
 
 dependencies {
+        compile 'org.eclipse.xtend:org.eclipse.xtend.lib:2.9.0'
 
-        compile 'org.eclipse.xtend:org.eclipse.xtend.lib:2.4.3'
-        compile 'org.eclipse.xtext:org.eclipse.xtext.xbase.lib:2.4.3'
         compile 'com.sparkjava:spark-core:1.1.1'
         compile 'org.javalite:javalite-common:1.4.8'
         compile 'mysql:mysql-connector-java:5.0.4'
@@ -39,54 +35,9 @@ dependencies {
         testCompile 'junit:junit:4.10'
 }
 
-eclipse {
-        project {
-                natures 'org.eclipse.xtext.ui.shared.xtextNature'
-                buildCommand 'org.eclipse.xtext.ui.shared.xtextBuilder'
-        }
-}
-
-import org.apache.log4j.BasicConfigurator
-import org.eclipse.xtend.core.XtendStandaloneSetup
-import org.eclipse.xtend.core.compiler.batch.XtendBatchCompiler
-
-task compileXtend {
-        def srcPath = 'src/main/java'
-        def targetPath = 'src/main/xtend-gen'
-        inputs.dir file(srcPath)
-        outputs.dir file(targetPath)
-
-        doLast {
-                def classpath = configurations.compile.asPath
-
-                BasicConfigurator.configure()
-                XtendBatchCompiler compiler = new XtendStandaloneSetup().createInjectorAndDoEMFRegistration().getInstance(XtendBatchCompiler.class)
-                compiler.setOutputPath(targetPath)
-                compiler.setClassPath(classpath)
-                compiler.setSourcePath(srcPath)
-                if (!compiler.compile()) {
-                        throw new GradleException("Xtend compilation failed.");
-                }
-        }
-}
-task compileTestXtend {
-        def srcPath = 'src/test/java'
-        def targetPath = 'src/test/xtend-gen'
-        inputs.dir file(srcPath)
-        outputs.dir file(targetPath)
-
-        doLast {
-                def classpath = configurations.testCompile.asPath
-
-                BasicConfigurator.configure()
-                XtendBatchCompiler compiler = new XtendStandaloneSetup().createInjectorAndDoEMFRegistration().getInstance(XtendBatchCompiler.class)
-                compiler.setOutputPath(targetPath)
-                compiler.setClassPath(classpath)
-                compiler.setSourcePath(srcPath)
-                if (!compiler.compile()) {
-                        throw new GradleException("Xtend compilation failed.");
-                }
-        }
+task copyRuntimeLibs(type: Copy) {
+    into "build/libs"
+    from configurations.runtime
 }
 
 task release(type:Zip, dependsOn: jar) {
@@ -99,13 +50,13 @@ task release(type:Zip, dependsOn: jar) {
         }
 }
 
+tasks.assemble.dependsOn copyRuntimeLibs
 tasks.build.dependsOn release
 
-sourceSets {
-        main { java { srcDir 'src/main/xtend-gen' } }
-        test { java { srcDir 'src/test/xtend-gen' } }
+fatJar {
+    manifest {
+        attributes("Implementation-Title": "Sparkler",
+                   "Implementation-Version": "v0.0.4",
+                   "Main-Class": "com.tobykurien.sparkler.tools.SparklerTools")
+    }
 }
-
-
-tasks.compileJava.dependsOn compileXtend
-tasks.compileTestJava.dependsOn compileTestXtend
