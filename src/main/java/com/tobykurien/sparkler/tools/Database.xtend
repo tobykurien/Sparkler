@@ -28,14 +28,18 @@ class Database {
          var md = jdbcConnection.getMetaData();
          var rs = md.getTables(null, null, "%", #["TABLE"]);
          while (rs.next()) {
-            var table = rs.getString(3)
-            Base.exec("drop table " + table)
+            try {
+                var table = rs.getString("TABLE_NAME")
+                Base.exec("drop table " + table)
+            } catch (Exception e) {
+                System.err.println("Unable to delete table, continuing. " + e.message)
+            }
          }
          
          // load the new schema
          var schema = new File("config/database.schema")
-         var sql = new FileReader(schema).readLines.join("\r\n")
-         Base.exec(sql)
+         var sql = new FileReader(schema).readLines.join("\r\n").split(";")
+         for (s : sql) Base.exec(s)
          Base.commitTransaction
       } catch (Exception e) {
          Base.rollbackTransaction
