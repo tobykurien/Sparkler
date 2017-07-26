@@ -12,6 +12,7 @@ import org.yaml.snakeyaml.Yaml
 import org.javalite.activejdbc.Registry
 import java.util.Properties
 import org.javalite.activejdbc.LogFilter
+import org.apache.commons.dbcp.BasicDataSource;
 
 class DatabaseManager {
    var static Map<String,String> dbConfig
@@ -44,7 +45,16 @@ class DatabaseManager {
 
    def static DataSource newDataSource() {
       if (dbConfig == null) throw new IllegalStateException("DatabaseManager.init() has not been called")
-      newDataSource(dbConfig.get("database"), dbConfig.get("user"), dbConfig.get("password"))
+      newDataSource(dbConfig.get("driver"), dbConfig.get("database"), dbConfig.get("user"), dbConfig.get("password"))
+   }
+
+   private def static DataSource newDataSource(String driver, String uri, String user, String password) {
+        var bds = new BasicDataSource();
+        bds.setDriverClassName(driver);
+        bds.setUrl(uri);
+        bds.setUsername(user);
+        bds.setPassword(password);
+        return bds;       
    }
 
    /**
@@ -56,7 +66,7 @@ class DatabaseManager {
       * @param password the password for the database
       * @return a new SQL data source
       */
-   private def static DataSource newDataSource(String uri, String user, String password) {
+   private def static DataSource newDataSourceOld(String uri, String user, String password) {
       var connectionPool = new GenericObjectPool(null)
       connectionPool.setMaxActive(maxActive)
       connectionPool.setMaxIdle(maxIdle)
