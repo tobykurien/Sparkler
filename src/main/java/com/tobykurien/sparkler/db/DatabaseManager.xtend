@@ -45,16 +45,7 @@ class DatabaseManager {
 
    def static DataSource newDataSource() {
       if (dbConfig == null) throw new IllegalStateException("DatabaseManager.init() has not been called")
-      newDataSource(dbConfig.get("driver"), dbConfig.get("database"), dbConfig.get("user"), dbConfig.get("password"))
-   }
-
-   private def static DataSource newDataSource(String driver, String uri, String user, String password) {
-        var bds = new BasicDataSource();
-        bds.setDriverClassName(driver);
-        bds.setUrl(uri);
-        bds.setUsername(user);
-        bds.setPassword(password);
-        return bds;       
+      newDataSource1(dbConfig.get("driver"), dbConfig.get("database"), dbConfig.get("user"), dbConfig.get("password"))
    }
 
    /**
@@ -66,7 +57,7 @@ class DatabaseManager {
       * @param password the password for the database
       * @return a new SQL data source
       */
-   private def static DataSource newDataSourceOld(String uri, String user, String password) {
+   private def static DataSource newDataSource1(String driver, String uri, String user, String password) {
       var connectionPool = new GenericObjectPool(null)
       connectionPool.setMaxActive(maxActive)
       connectionPool.setMaxIdle(maxIdle)
@@ -79,6 +70,15 @@ class DatabaseManager {
       //
       new PoolableConnectionFactory(connectionFactory, connectionPool, null, null, false, true)
       return new PoolingDataSource(connectionPool)
+   }
+
+   private def static DataSource newDataSource2(String driver, String uri, String user, String password) {
+        var bds = new BasicDataSource();
+        bds.setDriverClassName(driver);
+        bds.setUrl(uri);
+        bds.setUsername(user);
+        bds.setPassword(password);
+        return bds;       
    }
    
    private def static int getMaxActive() {
