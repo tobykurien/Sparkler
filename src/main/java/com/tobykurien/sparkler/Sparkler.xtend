@@ -6,8 +6,8 @@ import java.util.Map
 import java.util.concurrent.Executors
 import spark.Request
 import spark.Response
-import spark.ResponseTransformerRoute
 import spark.Spark
+import com.tobykurien.sparkler.transformer.JsonTransformer
 
 class Sparkler {
 
@@ -29,75 +29,91 @@ class Sparkler {
 
    // Extension methods for Spark's static methods, for easier syntax
    def static get(String path, (Request, Response)=>Object handler) {
-      Spark.get(new SRoute(path, handler))
+      Spark.get(path, new SRoute(path, handler))
    }
 
-   def static get(ResponseTransformerRoute route) {
-      Spark.get(route)
+   def static get(SRoute route) {
+      Spark.get(route.path, route)
    }
 
    def static post(String path, (Request, Response)=>Object handler) {
-      Spark.post(new SRoute(path, handler))
+      Spark.post(path, new SRoute(path, handler))
    }
 
-   def static post(ResponseTransformerRoute route) {
-      Spark.post(route)
+   def static post(SRoute route) {
+      Spark.post(route.path, route)
    }
 
    def static options(String path, (Request, Response)=>Object handler) {
-      Spark.options(new SRoute(path, handler))
+      Spark.options(path, new SRoute(path, handler))
    }
 
-   def static options(ResponseTransformerRoute route) {
-      Spark.options(route)
+   def static options(SRoute route) {
+      Spark.options(route.path, route)
    }
 
    def static head(String path, (Request, Response)=>Object handler) {
-      Spark.head(new SRoute(path, handler))
+      Spark.head(path, new SRoute(path, handler))
    }
 
-   def static head(ResponseTransformerRoute route) {
-      Spark.head(route)
+   def static head(SRoute route) {
+      Spark.head(route.path, route)
    }
 
    def static patch(String path, (Request, Response)=>Object handler) {
-      Spark.patch(new SRoute(path, handler))
+      Spark.patch(path, new SRoute(path, handler))
    }
 
-   def static patch(ResponseTransformerRoute route) {
-      Spark.patch(route)
+   def static patch(SRoute route) {
+      Spark.patch(route.path, route)
    }
 
    def static put(String path, (Request, Response)=>Object handler) {
-      Spark.put(new SRoute(path, handler))
+      Spark.put(path, new SRoute(path, handler))
    }
 
-   def static put(ResponseTransformerRoute route) {
-      Spark.put(route)
+   def static put(SRoute route) {
+      Spark.put(route.path, route)
    }
 
    def static connect(String path, (Request, Response)=>Object handler) {
-      Spark.connect(new SRoute(path, handler))
+      Spark.connect(path, new SRoute(path, handler))
    }
 
-   def static connect(ResponseTransformerRoute route) {
-      Spark.connect(route)
+   def static connect(SRoute route) {
+      Spark.connect(route.path, route)
    }
 
    def static delete(String path, (Request, Response)=>Object handler) {
-      Spark.delete(new SRoute(path, handler))
+      Spark.delete(path, new SRoute(path, handler))
    }
 
-   def static delete(ResponseTransformerRoute route) {
-      Spark.delete(route)
+   def static delete(SRoute route) {
+      Spark.delete(route.path, route)
    }
 
    def static trace(String path, (Request, Response)=>Object handler) {
-      Spark.trace(new SRoute(path, handler))
+      Spark.trace(path, new SRoute(path, handler))
    }
 
-   def static trace(ResponseTransformerRoute route) {
-      Spark.trace(route)
+   def static trace(SRoute route) {
+      Spark.trace(route.path, route)
+   }
+
+   def static getJson(String path, (Request, Response)=>Object handler) {
+      Spark.get(path, new JsonTransformer(path, handler))
+   }
+
+   def static postJson(String path, (Request, Response)=>Object handler) {
+      Spark.post(path, new JsonTransformer(path, handler))
+   }
+
+   def static putJson(String path, (Request, Response)=>Object handler) {
+      Spark.put(path, new JsonTransformer(path, handler))
+   }
+
+   def static deleteJson(String path, (Request, Response)=>Object handler) {
+      Spark.delete(path, new JsonTransformer(path, handler))
    }
 
    def static before((Request, Response, SFilter)=>void handler) {
@@ -125,15 +141,15 @@ class Sparkler {
    }
 
    def static setIpAddress(String ipAddress) {
-      Spark.setIpAddress(ipAddress)
+      Spark.ipAddress(ipAddress)
    }
 
    def static setPort(int port) {
-      Spark.setPort(port)
+      Spark.port(port)
    }
 
    def static setSecure(String keystoreFile, String keystorePassword, String truststoreFile, String truststorePassword) {
-      Spark.setSecure(keystoreFile, keystorePassword, truststoreFile, truststorePassword)
+      Spark.secure(keystoreFile, keystorePassword, truststoreFile, truststorePassword)
    }
 
    def static externalStaticFileLocation(String path) {

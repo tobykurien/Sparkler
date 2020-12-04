@@ -2,26 +2,24 @@ package com.tobykurien.sparkler.transformer
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.tobykurien.sparkler.Helper
+import com.tobykurien.sparkler.SRoute
 import com.tobykurien.sparkler.db.DatabaseManager
 import org.javalite.activejdbc.Base
 import org.javalite.activejdbc.LazyList
 import org.javalite.activejdbc.Model
 import spark.Request
 import spark.Response
-import spark.ResponseTransformerRoute
 
 /**
  * Returns a JSON serialized version of Model objects
  */
-class JsonTransformer extends ResponseTransformerRoute {
-   var (Request, Response)=>Object handler
+class JsonTransformer extends SRoute {
    
    new(String path, (Request, Response)=>Object handler) {
-      super(path, "application/json")
-      this.handler = handler      
+      super(path, handler)
    }
    
-   override render(Object json) {
+   def render(Object json) {
       return json.toString
    } 
    

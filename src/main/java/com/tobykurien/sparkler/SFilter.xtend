@@ -3,26 +3,29 @@ package com.tobykurien.sparkler
 import spark.Filter
 import spark.Request
 import spark.Response
+import spark.Spark
 
 /**
  * Implementation of Filter to accept Xtend lambdas
  */
-class SFilter extends Filter {
-   var (Request, Response, SFilter)=>void handler
+class SFilter implements Filter {
+   protected var (Request, Response, SFilter)=>void handler
+   protected var String path
+   protected var String acceptType
 
    protected new((Request, Response, SFilter)=>void handler) {
-      super()
       this.handler = handler
    }
 
    protected new(String path, (Request, Response, SFilter)=>void handler) {
-      super(path)
       this.handler = handler
+      this.path = path
    }
 
    protected new(String path, String acceptType, (Request, Response, SFilter)=>void handler) {
-      super(path, acceptType)
       this.handler = handler
+      this.path = path
+      this.acceptType = acceptType
    }
 
    override handle(Request req, Response res) {
@@ -30,18 +33,18 @@ class SFilter extends Filter {
    }
    
    def haltFilter() {
-      halt
+      Spark.halt
    }
 
    def haltFilter(int code) {
-      halt(code)
+      Spark.halt(code)
    }
 
    def haltFilter(String body) {
-      halt(body)
+      Spark.halt(body)
    }
 
    def haltFilter(int code, String body) {
-      halt(code, body)
+      Spark.halt(code, body)
    }
 }
