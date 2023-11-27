@@ -1,5 +1,4 @@
 apply plugin: 'org.xtext.xtend'
-apply plugin: 'eu.appsatori.fatjar'
 
 buildscript {
         repositories {
@@ -7,7 +6,7 @@ buildscript {
         }
 
         dependencies { 
-                classpath 'org.xtext:xtext-gradle-plugin:2.0.1'
+                classpath 'org.xtext:xtext-gradle-plugin:2.0.8'
                 classpath 'eu.appsatori:gradle-fatjar-plugin:0.3'
         }
 }
@@ -17,30 +16,30 @@ repositories {
 }
 
 dependencies {
-        compile 'org.eclipse.xtend:org.eclipse.xtend.lib:2.15.0'
+        implementation 'org.eclipse.xtend:org.eclipse.xtend.lib:2.25.0'
 
-        compile 'com.sparkjava:spark-core:2.7.2'
-        compile 'org.javalite:javalite-common:1.4.8'
-        compile 'mysql:mysql-connector-java:5.0.4'
-        compile 'org.xerial:sqlite-jdbc:3.7.2'
+        implementation 'com.sparkjava:spark-core:2.7.2'
+        implementation 'org.javalite:javalite-common:1.4.8'
+        implementation 'mysql:mysql-connector-java:5.0.4'
+        implementation 'org.xerial:sqlite-jdbc:3.7.2'
 
-        compile 'org.apache.commons:commons-dbcp2:2.5.0'
-        compile files('libs/activejdbc-1.4.9-tobykurien-2.jar')
-        compile 'com.fasterxml.jackson.core:jackson-databind:2.3.0'
-        compile 'org.slf4j:slf4j-simple:1.7.5'
+        implementation 'org.apache.commons:commons-dbcp2:2.5.0'
+        implementation files('libs/activejdbc-1.4.9-tobykurien-2.jar')
+        implementation 'com.fasterxml.jackson.core:jackson-databind:2.3.0'
+        implementation 'org.slf4j:slf4j-simple:1.7.5'
 
-        compile 'org.yaml:snakeyaml:1.13'
-        compile 'com.github.spullara.mustache.java:compiler:0.8.13'
+        implementation 'org.yaml:snakeyaml:1.13'
+        implementation 'com.github.spullara.mustache.java:compiler:0.8.13'
 
-		// db drivers for examples
-		compile 'com.h2database:h2:1.3.174'
-        
-        testCompile 'junit:junit:4.10'
+        // db drivers for examples
+        implementation 'com.h2database:h2:1.3.174'
+            
+        testImplementation 'junit:junit:4.10'
 }
 
 task copyRuntimeLibs(type: Copy) {
     into "build/libs"
-    from configurations.runtime
+    from configurations.runtimeClasspath
 }
 
 task release(type:Zip, dependsOn: jar) {
@@ -49,17 +48,48 @@ task release(type:Zip, dependsOn: jar) {
         from ('assets') { exclude('**/delete.me') }
         into ('libs') {
                 from new File(jar.destinationDir, jar.archiveName)
-                from configurations.compile.collect { it }
+                from configurations.compileClasspath.collect { it }
         }
 }
 
 tasks.assemble.dependsOn copyRuntimeLibs
 tasks.build.dependsOn release
 
-fatJar {
+xtend {
+  generator {
+    //whether to generate @SuppressWarnings("all"), enabled by default
+    javaSourceLevel = JavaVersion.VERSION_11
+    suppressWarningsAnnotation = false
+  }
+
+  debugger {
+    //how to install debug info into generated Java code
+    //SMAP adds Xtend debug info on top of Java
+    //PRIMARY makes Xtend the only debug info (throws away Java line numbers)
+    //default is SMAP for Java projects and PRIMARY for Android
+    sourceInstaller = 'SMAP' //or 'PRIMARY' or 'NONE'
+    //whether to hide synthetic variables in the debugger
+    hideSyntheticVariables = true
+  }
+
+  validator {
+    //adjust severity of issues
+    //available levels are error, warning, info and ignore
+    ignore 'org.eclipse.xtend.core.validation.IssueCodes.unused_private_member'
+    // These issue IDs can be found in your Eclipse project's .settings/org.eclipse.xtend.core.Xtend.prefs
+    // after enabling Project > Properties > Xtend > Errors/Warnings: [X] Enable project specific settings
+  }
+}
+
+jar {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+
     manifest {
         attributes("Implementation-Title": "Sparkler",
-                   "Implementation-Version": "v0.0.4",
+                   "Implementation-Version": "v0.2",
                    "Main-Class": "com.tobykurien.sparkler.tools.SparklerTools")
     }
-}
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+ }

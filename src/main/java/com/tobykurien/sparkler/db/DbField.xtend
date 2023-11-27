@@ -26,9 +26,24 @@ class DbFieldProcessor extends AbstractFieldProcessor {
          // reassign the initializer expression to be the init method’s body
          // this automatically removes the expression as the field’s initializer
          body = [
-            '''
-               return («field.type») get("«fieldName»");
-            '''
+            if (field.type.simpleName.equals("Boolean"))
+              '''
+                 return getBoolean("«fieldName»");
+              '''
+            else if (field.type.simpleName.equals("boolean"))
+              '''
+                 Boolean b = getBoolean("«fieldName»");
+                 if (b == null) return false;
+                 else return b.booleanValue();
+              '''
+            else if (field.type.simpleName.equalsIgnoreCase("Long"))
+              '''
+                 return getLong("«fieldName»");
+              '''
+            else
+              '''
+                 return («field.type») get("«fieldName»");
+              '''
          ]
       ]
 
