@@ -9,7 +9,7 @@ class Helper {
    
    def static handleError(Request request, Response response, int status, Exception e) {
       response.status(status)
-      e.class.name + ": " + e.message + "<br/>" + e.stackTrace.join("<br/>")
+      e.class.name + ": " + e.message + "<br/>" + e.stackTrace.take(3).join("<br/>")
    }
 
    def static handleError(Request request, Response response, Exception e) {

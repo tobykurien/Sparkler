@@ -29,7 +29,7 @@ class JsonTransformer extends SRoute {
 
    def returnError(Request request, Response response, int statusCode, Exception e) {
       var error = Helper.handleError(request, response, statusCode, e)
-      System.err.println(error)
+      System.err.println(error.replaceAll("<br/>", "\n\t"))
       "{\"error\" : \""+ error.escapeString + "\"}"
    }
    
